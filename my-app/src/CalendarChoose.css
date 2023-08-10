@@ -1,0 +1,18 @@
+.calendarMainBloque{
+    width: 100vw;
+    height: 100dvh !important;
+    background-image: url('../public/img/bg.jpg');
+    background-size: 100dvw 100dvh;
+}
+
+.calendarMainBloque> div{
+    background-color: white;
+}
+.itemOnListofUsers{
+    transition: all 0.15s ease-in-out;
+}
+
+.itemOnListofUsers:hover{
+    background-color: rgb(152, 193, 250);
+    transition: all 0.15s ease-in-out;
+}

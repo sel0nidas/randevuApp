@@ -1,0 +1,15 @@
+.loginMain{
+    width: 100vw;
+    height: 100vdh !important;
+    background-image: url('../public/img/bg.jpg');
+    background-size: 100dvw 100dvh;
+}
+
+.innerLoginBloque{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3% 5%;
+     background-color: #ebeef3;
+     border-radius: 0.5rem;
+}
