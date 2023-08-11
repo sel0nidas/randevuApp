@@ -16,7 +16,13 @@ export default function CalendarHeader(){
 
   	const navigate = useNavigate();
 
-    const [userType2, setUserType] = useState(JSON.parse(localStorage.getItem('formData')).userType);
+    
+    useEffect(()=>{
+		if(!localStorage.getItem('formData'))
+			navigate("/login")
+	}, []);
+
+    const [userType2, setUserType] = useState(localStorage.getItem('formData') ? JSON.parse(localStorage.getItem('formData')).userType : "user");
     console.log("userType", userType2)
     const {setEventTrigger} = useContext(GlobalContext);
 
@@ -84,7 +90,7 @@ export default function CalendarHeader(){
     return (
         <header className="px-4 py-2 flex items-center justify-between">
             <div className="flex flex-1 items-center justify-center">
-                <h1 className="mr-10 text-xl text-gray-500 fond-bold pl-2">Calendar</h1>
+                <h1 className="mr-10 text-base text-gray-500 fond-bold pl-2 underline decoration-blue-700 decoration-2">Appointment Giver ID: {localStorage.getItem('appointmentGiver')}</h1>
                 {/* <Button onClick={refreshCalendar}>
                     <span className="material-icons-outlined cursor-pointer text-gray-600 mx-2">
                         <RefreshIcon />
@@ -109,15 +115,15 @@ export default function CalendarHeader(){
                         <ChevronRightIcon />
                     </span>
                 </Button>
-                <div style={{width: '220px'}}>
-                    <h2 className="ml-4 text-xl text-gray-500 font-bold">
+                <div style={{width: '220px'}} className="">
+                    <h2 className="ml-4 text-base sm:text-xs md:text-xs lg:text-base 2xl:text-lg text-gray-500 font-bold">
                         {dayjs(new Date(dayjs().year(), monthIndex)).format(
                             "MMMM YYYY"
                         )}
                     </h2>
                 </div>
             </div>
-            <div className="flex flex-1 justify-center items-center">
+            <div className="flex flex-1 justify-center items-center text-xs sm:text-xs md:text-xs lg:text-sm 2xl:text-lg">
                 <div className="flex px-3">
                     <div className="flex items-center">
                         <div className="bg-gray-0 rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px'}}></div>
@@ -156,16 +162,16 @@ export default function CalendarHeader(){
                     </div>
                 </div>
             </div>
-            <div className="flex-1 flex justify-evenly">
-                <div className="flex items-center justify-center">
-                    Kullanıcı Türü: {userType2}
+            <div className="flex-1 flex justify-end">
+                <div className="flex items-center justify-center text-base underline decoration-purple-700 decoration-2">
+                    Type of User: {userType2 === "doctor" ? "doctor" : "user"}
                 </div>
                 {userType2 == "doctor" && 
-                <Button style={{marginRight: '0px'}} color="inherit" onClick={Logout}>
-                    <NotificationsIcon />
-                </Button> 
+                <></>
+                // <Button style={{marginRight: '0px'}} color="inherit" onClick={Logout}>
+                //     <NotificationsIcon />
+                // </Button> 
                 }
-		        
 		        <Button style={{marginRight: '0px'}} color="inherit" onClick={Logout}>
                     <LogoutIcon />
                 </Button> 

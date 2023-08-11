@@ -113,11 +113,11 @@ let array = [
       setDaySelected(day);
       }}
       >
-        {rowIdx === 0 && (
+        {/* {rowIdx === 0 && (
           <p className="text-sm mt-1">
             {day.format("ddd").toUpperCase()}
           </p>
-        )}
+        )} */}
         <p
           className={`text-sm p-1 my-1 text-center  ${getCurrentDayClass()}`}
         >
@@ -125,7 +125,7 @@ let array = [
         </p>
       </header>
       <div
-        className={`flex-1 flex row col-md-12 justify-center w-100 ${isBefore()}`}
+        className={`flex-1 flex row col-md-12 justify-center hidden md:flex w-100 ${isBefore()}`}
       >
         
       {/* {console.log("test"+day.format('dddd'))} */}

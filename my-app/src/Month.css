@@ -1,0 +1,9 @@
+@media only screen and (max-width: 768px) {
+    .monthMainBloque{
+        height: 30dvh !important;
+    }
+}
+
+.monthMainBloque{
+    height: 80vh;
+}

@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import GlobalContext from "../GlobalContext";
 import { Button } from "@mui/material";
 import "../Day.css"
@@ -16,10 +17,41 @@ export default function TimeBlock({ day, time, rowIdx, statusState, type }) {
     const [description, setDescription] = useState(
         selectedEvent ? selectedEvent.description : "");
     
+    const navigate = useNavigate();
+    console.log(!localStorage.getItem('formData'));
+    // useEffect(()=>{
 
-    const [userid, setUserid] = useState(JSON.parse(localStorage.getItem('formData')).id);
+    //     try {
+    //         if(!JSON.parse(localStorage.getItem('formData')).id)
+    //             throw new Error('Fill the username field properly!');
+    //         } catch (error) {
+    //             navigate("/login")
+    //     }
+    // },[])
 
-    const [userType, setUserType] = useState(JSON.parse(localStorage.getItem('formData')).userType);
+    const [userid, setUserid] = useState(0);
+
+    const [userType, setUserType] = useState("user");
+    
+    useEffect(() => {
+        try {
+            const formData = localStorage.getItem('formData');
+            if (!formData) {
+                throw new Error('Form data not found in localStorage.');
+            }
+            const parsedData = JSON.parse(formData);
+            
+            if (!parsedData.id) {
+                throw new Error('Fill the username field properly!');
+            }
+    
+            setUserid(parsedData.id);
+            setUserType(parsedData.userType);
+        } catch (error) {
+            navigate("/login");
+        }
+    }, []);
+
     console.log("user", userType, userid)
     //console.log(`TimeBlock${type}`, time, statusState, day.format().slice(0, -6));
     
@@ -73,7 +105,7 @@ export default function TimeBlock({ day, time, rowIdx, statusState, type }) {
      })
 
         const jsonData = await response.json();
-        console.log("xsasd", jsonData)
+        //console.log("xsasd", jsonData)
         return jsonData;
     }
 
@@ -107,7 +139,7 @@ export default function TimeBlock({ day, time, rowIdx, statusState, type }) {
         }
 
         try {
-            obj2 = false //await CheckAppointmentLimitByDate(day, time);
+            obj2 = await CheckAppointmentLimitByDate(day, time);
             console.log("added2", obj2);   
         } catch (error) {
             console.error(error);
@@ -192,11 +224,12 @@ export default function TimeBlock({ day, time, rowIdx, statusState, type }) {
         }
         if(obj){
             if(obj.status == "Pending"){
-                alert("Error: You can't have an appointment for the date that is already settled")
+                alert("Error: You can't have an appointment for the date that is already settled.")
             }
         }
         if(obj2 == true){
-            alert("Error: You can't have 2 appointment for the same day")
+            alert(`Error: You can't have 2 appointment for the same day.`)
+            console.log(obj2, "TESTASD");
         }
         setEventTrigger(Date.now());
         setTimeout(() => {

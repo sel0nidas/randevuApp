@@ -85,8 +85,8 @@ function App() {
          const jsonData = await response.json();
          console.log(jsonData);
          console.log(UserName);
-         localStorage.setItem('formData', JSON.stringify(jsonData));
-         navigate("/calendar");
+         //localStorage.setItem('formData', JSON.stringify(jsonData));
+         navigate("/login");
          
 
      } catch (error) {
@@ -136,9 +136,8 @@ function App() {
             <form className='innerLoginBloque'>
                <h2 className='text-xl font-bold'>REGISTER</h2>
                <FormControl className='mt-3'>
-                  <InputLabel htmlFor="username">Email address</InputLabel>
+                  <InputLabel htmlFor="username">Username</InputLabel>
                   <Input id="username" aria-describedby="my-helper-text" />
-                  <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
                </FormControl>
                
                <FormControl className='mt-3'>
@@ -155,13 +154,13 @@ function App() {
                  label="userType"
                  onChange={handleChange}
                >
-                 <MenuItem value={"user"}>Appointment Taker</MenuItem>
-                 <MenuItem value={"doctor"}>Appointment Giver</MenuItem>
+                 <MenuItem value={"user"}>User</MenuItem>
+                 <MenuItem value={"doctor"}>Doctor</MenuItem>
                </Select>
                </FormControl>
 
                <Button className="mt-3" variant="contained" onClick={HandleSubmit}>REGISTER</Button> 
-               <Link to="/calendar">Home</Link>
+               <Link className='mt-2' to="/login">Login</Link>
             </form>
          </div>
     </div>

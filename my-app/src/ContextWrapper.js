@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import GlobalContext from './GlobalContext'
 import dayjs, { Dayjs } from 'dayjs'
-
+import { useNavigate } from "react-router-dom";
 
 function savedEventsReducer(state, {type, payload}){
     switch (type) {
@@ -22,10 +22,15 @@ function savedEventsReducer(state, {type, payload}){
 }
 
 const fetchEvents =  ()=> {
+
     var array = [];
+    var senderId = 0;
+    if(localStorage.getItem('formData')){
+        senderId = JSON.parse(localStorage.getItem('formData')).id;
+    }
+
     var receiverId = localStorage.getItem("appointmentGiver")//1;
 
-    const senderId = JSON.parse(localStorage.getItem('formData')).id;
     var statusTest;
     console.log("receiverId", receiverId);
 
@@ -62,7 +67,8 @@ const fetchEvents =  ()=> {
 }
 
 function initEvents(){
-    fetchEvents();
+    
+    fetchEvents();  
     //console.log("testREFinit")
     
     // let arr = []

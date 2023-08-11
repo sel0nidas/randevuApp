@@ -137,8 +137,8 @@ function App() {
             </FormControl>
 
             <Button className="mt-3" variant="contained" onClick={HandleSubmit}>Log in</Button> 
-            <Link to="/calendar">Home</Link>
-            <Link to="/register">Register</Link>
+            {/* <Link to="/calendar">Home</Link> */}
+            <Link className="mt-2" to="/register">Register</Link>
             </form>
          </div>
     </div>

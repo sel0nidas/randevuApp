@@ -1,8 +1,9 @@
 import React from "react";
 import Day from "./Day";
+import "../Month.css"
 export default function Month({ month }) {
   return (
-    <div className="flex-1 grid grid-cols-7 grid-rows-5" style={{height: '90vh'}}>
+    <div className="flex-1 grid grid-cols-7 grid-rows-5 monthMainBloque">
       {month.map((row, i) => (
           row.map((day, idx) => (
             <Day day={day} key={idx} rowIdx={i} />
