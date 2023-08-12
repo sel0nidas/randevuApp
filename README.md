@@ -9,7 +9,7 @@ RandevuApp kullanıcıların randevu alıp verebildiği bir platformdur. Bu Repo
 
 
 ## Use Case(Kullanım Senaryosu) Kısıtları (Değişebilir)
-- Bir doktordan(veya herhangi bir randevu veren iş kolu bu gruba dahil edilebilir) bir saat için randevu alınması isteniyorsa ilgili tarih ve saate dair randevu isteği açılmalı ve doktorun da bu randevu tablebini onaylaması gereklidir.
+- Bir doktordan(veya herhangi bir randevu veren iş kolu bu gruba dahil edilebilir) bir saat için randevu alınması isteniyorsa ilgili tarih ve saate dair randevu isteği açılmalı ve doktorun da bu randevu talebini onaylaması gereklidir.
 - Onaylanmadan bekleyen randevu talepleri kabul edilmeden ilgili kullanıcı o randevuyu almış olarak belirtilmez.
 - Doktorun randevu isteğine verdiği cevap kesindir, geri alınamaz.
 - Doktorun randevu isteğine verdiği cevap "kabul" ise ilgili kullanıcının randevusunu iptal etme hakkı bulunur.
