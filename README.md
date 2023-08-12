@@ -20,3 +20,10 @@ RandevuApp kullanıcıların randevu alıp verebildiği bir platformdur. Bu Repo
 - Takvimler doktorlara göredir doktorların müsaitlik durumları tablolarda işaretlenmiştir(müsait, değil vs gibi).
 - Takvimlerdeki renkler doktorların müsaitlik durumlarını belirttiği gibi doktora öbür kullanıcılar tarafından gönderilen isteklerle de ilişkilidir. Örneğin, A kullanıcısı bir doktordan randevu aldığında veya randevu isteği yolladığında B kullanıcısına bu durum kırmızı olarak görünür ve B kullanıcısı o tarih ve saat için istek atamaz.
 - Doktorun kendi müsaitlik durumu söz konusu olduğundan ötürü doktor kendi paneli üzerinden bir isteği reddettiğinde ilgili tarihteki saat bloğu kırmızı olarak değil renksiz olarak yani "müsait" olarak işaretlenir. Bu durum doktorun kendine göre müsaitliğini veya meşguliyetini görmesine yardımcı olur.
+
+## Dipnot
+- RandevuApp'in işlevselliğini anlatırken kullanılan örnekler genel anlamda doktor üzerinden verilmiş olmasına rağmen sistem genel olarak randevu ihtiyaçları için tasarlanmıştır. Sistem tasarlanırken bu şekilde tasarlanmıştır. Doktor olarak ifade edilen kısma herhangi bir randevu veren iş kolu bu gruba dahil edilebilir.
+
+## Eklenebilecekler
+- Doktor/Randevu Veren seçiminde kategorizasyon kısmı eklenebilir, bu sayede kullanıcıların kendilerinin ihtiyaçlarına özel doktorlar da bu gruba dahil edilmiş olur.
+- UI üzerinde randevu alıp verme işlemi öncesi ve sonrası için UI ilgili kullanıcı hakkında daha detaylı bir bilgilendirme ekranı sunabilir. Örneğin, randevu alan kullanıcının cinsiyet, isim vb. genel özelliklerinin doktor tarafından görülmesi veya hastanın doktora randevu talebini iletirken not bırakması gibi.
