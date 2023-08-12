@@ -3,9 +3,9 @@
 RandevuApp kullanıcıların randevu alıp verebildiği bir platformdur. Bu Repo ilgili uygulamanın frontend dosyalarını içermektedir. Backend dosyalarını görmek için kullanıcı sayfam üzerinden "randevuAppBackend" isimli repo'ya bakabilirsiniz.
 
 ## Kullanılan Teknolojiler
-- Backend: .NET Core v2 Web API
-- Frontend: React.js
-- Kullanılan Frontend kütüphaneleri: "eser miktarda" MaterialUI😄 , Tailwind, Bootstrap(sadece grid yapısının kullanıldığı bazı noktalarda kullanılmıştır).
+- Backend --> .NET Core v2 Web API
+- Frontend --> React.js
+- Kullanılan Frontend kütüphaneleri --> "eser miktarda" MaterialUI😄 , Tailwind, Bootstrap(sadece grid yapısının kullanıldığı bazı noktalarda kullanılmıştır).
 
 
 ## Use Case(Kullanım Senaryosu) Kısıtları (Değişebilir)
