@@ -13,10 +13,10 @@ RandevuApp kullanıcıların randevu alıp verebildiği bir platformdur. Bu Repo
 - Onaylanmadan bekleyen randevu talepleri kabul edilmeden ilgili kullanıcı o randevuyu almış olarak belirtilmez.
 - Doktorun randevu isteğine verdiği cevap kesindir, geri alınamaz.
 - Doktorun randevu isteğine verdiği cevap "kabul" ise ilgili kullanıcının randevusunu iptal etme hakkı bulunur.
+- Kullanıcılar eğer doktora gönderdikleri randevu talebinden "ret" cevabı alırsa aynı gün ve saat için başka bir randevu isteği gönderemez. (Örn: 12/08/2023 09:00 için istenilen randevu ret yerse bir daha 12/08/2023 09:00 için istek atılamaz.)
 - Kullanıcı iptal ettiği anda ilgili randevu gün ve saatine dair olan hakkını kaybeder.
 - Kullanıcılar her gün için sadece 1 randevu talebinde bulunabilir.
 - Kullanıcılar randevu talebi gönderdikleri veya onay aldıkları vs. tarihlere başka doktor dahi olsa kesinlikle istek dahi gönderemezler.
-- Kullanıcılar eğer doktora gönderdikleri randevu talebinden ret cevabı alırsa aynı gün ve saat için başka bir randevu isteği gönderemez. (Örn: 12/08/2023 09:00 için istenilen randevu ret yerse bir daha 12/08/2023 09:00 için istek atılamaz.)
 - Takvimler doktorlara göredir doktorların müsaitlik durumları tablolarda işaretlenmiştir(müsait, değil vs gibi).
 - Takvimlerdeki renkler doktorların müsaitlik durumlarını belirttiği gibi doktora öbür kullanıcılar tarafından gönderilen isteklerle de ilişkilidir. Örneğin, A kullanıcısı bir doktordan randevu aldığında veya randevu isteği yolladığında B kullanıcısına bu durum kırmızı olarak görünür ve B kullanıcısı o tarih ve saat için istek atamaz.
 - Doktorun kendi müsaitlik durumu söz konusu olduğundan ötürü doktor kendi paneli üzerinden bir isteği reddettiğinde ilgili tarihteki saat bloğu kırmızı olarak değil renksiz olarak yani "müsait" olarak işaretlenir. Bu durum doktorun kendine göre müsaitliğini veya meşguliyetini görmesine yardımcı olur.
