@@ -17,7 +17,7 @@ RandevuApp kullanıcıların randevu alıp verebildiği bir platformdur. Bu Repo
 - Kullanıcı iptal ettiği anda ilgili randevu gün ve saatine dair olan hakkını kaybeder.
 - Kullanıcılar her gün için sadece 1 randevu talebinde bulunabilir.
 - Kullanıcılar randevu talebi gönderdikleri veya onay aldıkları vs. tarihlere başka doktor dahi olsa kesinlikle istek dahi gönderemezler.
-- Takvimler doktorlara göredir doktorların müsaitlik durumları tablolarda işaretlenmiştir(müsait, değil vs gibi).
+- Takvimler doktorlara göredir doktorların müsaitlik durumları tablolarda işaretlenmiştir(müsait, değil gibi).
 - Takvimlerdeki renkler doktorların müsaitlik durumlarını belirttiği gibi doktora öbür kullanıcılar tarafından gönderilen isteklerle de ilişkilidir. Örneğin, A kullanıcısı bir doktordan randevu aldığında veya randevu isteği yolladığında B kullanıcısına bu durum kırmızı olarak görünür ve B kullanıcısı o tarih ve saat için istek atamaz.
 - Doktorun kendi müsaitlik durumu söz konusu olduğundan ötürü doktor kendi paneli üzerinden bir isteği reddettiğinde ilgili tarihteki saat bloğu kırmızı olarak değil renksiz olarak yani "müsait" olarak işaretlenir. Bu durum doktorun kendine göre müsaitliğini veya meşguliyetini görmesine yardımcı olur.
 
