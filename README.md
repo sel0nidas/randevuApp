@@ -25,5 +25,5 @@ RandevuApp kullanıcıların randevu alıp verebildiği bir platformdur. Bu Repo
 - RandevuApp'in işlevselliğini anlatırken kullanılan örnekler genel anlamda doktor üzerinden verilmiş olmasına rağmen sistem genel olarak randevu ihtiyaçları için tasarlanmıştır. Sistem tasarlanırken bu şekilde tasarlanmıştır. Doktor olarak ifade edilen kısma herhangi bir randevu veren iş kolu bu gruba dahil edilebilir.
 
 ## Eklenebilecekler
-- Doktor/Randevu Veren seçiminde kategorizasyon kısmı eklenebilir, bu sayede kullanıcıların kendilerinin ihtiyaçlarına özel doktorlar da bu gruba dahil edilmiş olur.
+- Doktor/Randevu Veren seçiminde kategorizasyon kısmı eklenebilir, bu sayede kullanıcıların kendilerinin ihtiyaçlarına özel doktorlar da daha rahat seçilmiş olur.
 - UI üzerinde randevu alıp verme işlemi öncesi ve sonrası için UI ilgili kullanıcı hakkında daha detaylı bir bilgilendirme ekranı sunabilir. Örneğin, randevu alan kullanıcının cinsiyet, isim vb. genel özelliklerinin doktor tarafından görülmesi veya hastanın doktora randevu talebini iletirken not bırakması gibi.
