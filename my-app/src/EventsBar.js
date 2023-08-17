@@ -51,12 +51,12 @@ export default function EventsBar() {
 }
 
 let array = [
-    { day: daySelected, time: "09:00", status: "available" },
-    { day: daySelected, time: "10:00", status: "available" },
-    { day: daySelected, time: "11:00", status: "available" },
-    { day: daySelected, time: "13:00", status: "available" },
-    { day: daySelected, time: "14:00", status: "available" },
-    { day: daySelected, time: "15:00", status: "available" },
+    { day: daySelected, time: "09:00", status: "available", description: ""},
+    { day: daySelected, time: "10:00", status: "available", description: ""},
+    { day: daySelected, time: "11:00", status: "available", description: ""},
+    { day: daySelected, time: "13:00", status: "available", description: ""},
+    { day: daySelected, time: "14:00", status: "available", description: ""},
+    { day: daySelected, time: "15:00", status: "available", description: ""},
   ];
 
   function isDateOutOfRange(){
@@ -130,7 +130,10 @@ let array = [
       
       {dayEvents.map((evt, idx) => {
         var index = array.findIndex((o) => o.time == evt.title);
-        if (index >= 0) array[index].status = evt.status;
+        if (index >= 0) {
+          array[index].status = evt.status;
+          array[index].description = evt.description;
+        }
         //console.log(index, array[index]);
       })}
       {

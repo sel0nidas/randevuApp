@@ -32,7 +32,6 @@ export default function TimeBlock({ day, time, rowIdx, statusState, description,
     const [userType, setUserType] = useState("user");
     
     useEffect(() => {
-        console.log("TESAS", description);
         try {
             const formData = localStorage.getItem('formData');
             if (!formData) {
