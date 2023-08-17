@@ -55,12 +55,12 @@ export default function Day({ day, rowIdx }) {
     return jsonData;
 }
 let array = [
-    {date: day, time: '09:00', status: "available"},
-    {date: day, time: '10:00', status: "available"},
-    {date: day, time: '11:00', status: "available"},
-    {date: day, time: '13:00', status: "available"},
-    {date: day, time: '14:00', status: "available"},
-    {date: day, time: '15:00', status: "available"}
+    {date: day, time: '09:00', status: "available", description: ""},
+    {date: day, time: '10:00', status: "available", description: ""},
+    {date: day, time: '11:00', status: "available", description: ""},
+    {date: day, time: '13:00', status: "available", description: ""},
+    {date: day, time: '14:00', status: "available", description: ""},
+    {date: day, time: '15:00', status: "available", description: ""}
 ]
 
   useEffect(() => {
@@ -82,16 +82,17 @@ let array = [
       ? "bg-blue-600 text-white rounded-full w-7"
       : "";
   }
-
-    function setTitleAsTime(text) {
-          alert(text)
-    }
-
-    function isAvailable(events, time){
-      var test = events.findIndex(e=>e.title == "09:00") 
-      console.log(test)
-      return test;
-    }
+  
+  function isDateInRange(){
+    return (day.isBefore(dayjs()) === false && day.isBefore(dayjs().add(60, 'day')) === true) || day.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
+  }
+  
+  function isDateInRangeClass() {
+    return isDateInRange() ? "" : "opacity-50";
+  }
+  function isNextOrPrevMonth(){
+    return (parseInt(day.format('MM')) === monthIndex+1) ? "" : "opacity-50 !bg-gray-200";
+  }
 
     function isWeekend(day) {
       if(day.format("dddd") == "Saturday" || day.format("dddd") == "Sunday")
@@ -101,21 +102,25 @@ let array = [
     }
 
   return (
-    <div className={`border border-gray-200 flex flex-col overflow-y-auto ${isBefore()}`}
+    <div className={`border border-gray-200 flex flex-col overflow-y-auto ${isBefore()} ${isNextOrPrevMonth()} hover:bg-blue-100`}
     partOfWeek={isWeekend(day)}
     status={status}
     onClick={() => {
       setDaySelected(day);
+      
+      // if(isDateInRange())
+      //   setShowEventModal(true);
+
     }}
     >
-      <header className={`flex flex-col items-center ${isBefore()}`}
+      <header className={`flex flex-col items-center ${isBefore()} ${isDateInRangeClass()}`}
       onClick={() => {
       setDaySelected(day);
       }}
       >
         {/* {rowIdx === 0 && (
           <p className="text-sm mt-1">
-            {day.format("ddd").toUpperCase()}
+            {day.format("ddd").toUpperCase()
           </p>
         )} */}
         <p
@@ -125,25 +130,29 @@ let array = [
         </p>
       </header>
       <div
-        className={`flex-1 flex row col-md-12 justify-center hidden md:flex w-100 ${isBefore()}`}
+        className={`flex-1 flex row col-md-12 justify-center hidden md:flex w-100 ${isBefore()} ${isDateInRangeClass()}`}
       >
         
       {/* {console.log("test"+day.format('dddd'))} */}
-        
+      
       {dayEvents.map((evt, idx) => {
             var index = array.findIndex(o => o.time == evt.title)
             if(index>=0){
 				array[index].status = evt.status
+        array[index].description = evt.description
 				
 			}
-            //console.log(index, array[index])
         })}
+      
+      {
+        console.log("asx2", array, day.format("DD-MM-YY"))
+      }
+      
       {
         array.map((evt, id)=>(
           (
-            (day.isBefore(dayjs()) === false
-            ||
-            day.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
+            (
+              isDateInRange()
             )
             // &&
             // day.format("dddd") != "Saturday"
@@ -153,7 +162,7 @@ let array = [
           )
           &&
           <div className="px-0.5 py-0 col-md-6">
-            <TimeBlock day={evt.date} time={evt.time} statusState={evt.status} key={id} type={"small"}/>
+            <TimeBlock day={evt.date} time={evt.time} description={evt.description} statusState={evt.status} key={id} type={"small"}/>
           </div>
         ))
       }

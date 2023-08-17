@@ -9,16 +9,14 @@ import DoneIcon from '@mui/icons-material/Done';
 import Alert from '@mui/material/Alert';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function TimeBlock({ day, time, rowIdx, statusState, type }) {
+export default function TimeBlock({ day, time, rowIdx, statusState, description, type }) {
     const [myStatus,setMyStatus] = useState();
-    const { daySelected, dispatchCalEvent, selectedEvent, eventTrigger, setEventTrigger} = useContext(GlobalContext);
+    const { daySelected, dispatchCalEvent, selectedEvent, eventTrigger, setEventTrigger, setShowEventModal, timeBloque, setTimeBloque, setDescriptionBloque} = useContext(GlobalContext);
     const [title, setTitle] = useState(
         selectedEvent ? selectedEvent.title : "");
-    const [description, setDescription] = useState(
-        selectedEvent ? selectedEvent.description : "");
     
     const navigate = useNavigate();
-    console.log(!localStorage.getItem('formData'));
+    //console.log(!localStorage.getItem('formData'));
     // useEffect(()=>{
 
     //     try {
@@ -34,6 +32,7 @@ export default function TimeBlock({ day, time, rowIdx, statusState, type }) {
     const [userType, setUserType] = useState("user");
     
     useEffect(() => {
+        console.log("TESAS", description);
         try {
             const formData = localStorage.getItem('formData');
             if (!formData) {
@@ -52,7 +51,7 @@ export default function TimeBlock({ day, time, rowIdx, statusState, type }) {
         }
     }, []);
 
-    console.log("user", userType, userid)
+    //console.log("user", userType, userid)
     //console.log(`TimeBlock${type}`, time, statusState, day.format().slice(0, -6));
     
     var date2 = day.set('hours', time[0]+time[1]).set('minutes', 0).set('seconds', 0).format().slice(0, -6)//time[0]+time[1])
@@ -235,7 +234,7 @@ export default function TimeBlock({ day, time, rowIdx, statusState, type }) {
         setTimeout(() => {
            setEventTrigger(Date.now());
         }, 100);
-        console.log("eventTrigger", eventTrigger)
+        //console.log("eventTrigger", eventTrigger)
     }
 
     async function RejectOrAccept(responseType) {
@@ -276,7 +275,7 @@ export default function TimeBlock({ day, time, rowIdx, statusState, type }) {
      setTimeout(() => {
         setEventTrigger(Date.now());
      }, 100);
-     console.log("eventTriggerRejectAccept", eventTrigger)
+     //console.log("eventTriggerRejectAccept", eventTrigger)
     }
 
     return (
@@ -284,7 +283,9 @@ export default function TimeBlock({ day, time, rowIdx, statusState, type }) {
         {type=="small" ?
         (<div className="text-sm text-center rounded-sm py-0 small-timebloque" status = {statusState}>{time}</div>):
         (
-        <div className="text-md text-center rounded-sm mt-2 px-3 py-2 row hover massive font-bold border-2 border-gray-950" status = {statusState}>
+        <div className="text-md text-center rounded-sm mt-2 px-3 py-2 row hover massive font-bold border-2 border-gray-950" 
+        onClick={()=>{setTimeBloque(time); setDescriptionBloque(description); setShowEventModal(true);}} 
+        status = {statusState}>
             <div className="col-lg-4 col-md-12 flex justify-center items-center">{time}</div>
             {userType != "doctor"  ? (
             statusState == "available" &&
@@ -319,13 +320,10 @@ export default function TimeBlock({ day, time, rowIdx, statusState, type }) {
             </Button>
             </div>
             }
-            
-
-            
         </div>
+        
         )  
         }
-
         </div>
     )
 }

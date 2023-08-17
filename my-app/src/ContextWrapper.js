@@ -45,7 +45,7 @@ const fetchEvents =  ()=> {
             //console.log("elementCheck", new Date(element.date).getTime())
             element.day = new Date(element.date).getTime()
             element.id = 1691182800000
-            console.log("TESTEST", receiverId, senderId, element, element.senderId != senderId)
+            //console.log("TESTEST", receiverId, senderId, element, element.senderId != senderId)
             if(receiverId != senderId){
                 if(element.senderId != senderId && (element.status == "pending" || element.status == "accepted"))
                     element.status = "rejected";
@@ -57,12 +57,81 @@ const fetchEvents =  ()=> {
                     element.status = "available"
                 }
             }
-            array.push({title: element.title, day: new Date(element.date).getTime(), description: "", id: 1691269200000, receiverId: element.receiverId, senderId: element.senderId,  status: element.status})
+            array.push({title: element.title, day: new Date(element.date).getTime(), description: element.description, id: 1691269200000, receiverId: element.receiverId, senderId: element.senderId,  status: element.status})
         });
+
+    
         //console.log("fetchedArray", array);
         localStorage.setItem("savedEvents", JSON.stringify(array));
+
         // console.log("arr", arr);
     })
+
+    // fetch(`http://localhost:52463/api/appointment/getusercalendar/${senderId}`, {
+    //     method: 'GET',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     }
+    // }).then(x=>x.json()).then(y=>{
+
+    //     y.forEach(element => {
+            
+    //         element.day = new Date(element.date).getTime()
+    //         element.id = 1691182800000
+
+    //         if(element.receiverId != receiverId){
+    //             if(element.status == "accepted" || element.status == "pending")
+    //                 element.status = "rejected"
+    //             else if(element.status == "rejected")
+    //                 element.status = "available"
+    //         }
+
+    //         array.push({title: element.title, day: new Date(element.date).getTime(), description: "", id: 1691269200000, receiverId: element.receiverId, senderId: element.senderId,  status: element.status})
+
+    //         //console.log("other appointments", array.findIndex(e=>e.receiverId != receiverId))
+
+    //     });
+    
+    //     //console.log("fetchedArray", array);
+    //     localStorage.setItem("savedEvents", JSON.stringify(array));
+    //     // console.log("arr", arr);
+    // })
+
+
+
+
+
+    // fetch(`http://localhost:52463/api/appointment/getcalendar/${receiverId}`, {
+    //     method: 'GET',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     }
+    // }).then(x=>x.json()).then(y=>{
+
+    //     y.forEach(element => {
+    //         //console.log("elementCheck", new Date(element.date).getTime())
+    //         element.day = new Date(element.date).getTime()
+    //         element.id = 1691182800000
+    //         console.log("TESTEST", receiverId, senderId, element, element.senderId != senderId)
+    //         if(receiverId != senderId){
+    //             if(element.senderId != senderId && (element.status == "pending" || element.status == "accepted"))
+    //                 element.status = "rejected";
+    //             else if(element.senderId != senderId && (element.status == "rejected"))
+    //                 element.status = "available"
+    //         }
+    //         else if(receiverId == senderId){
+    //             if(element.status == "rejected"){
+    //                 element.status = "available"
+    //             }
+    //         }
+    //         array.push({title: element.title, day: new Date(element.date).getTime(), description: "", id: 1691269200000, receiverId: element.receiverId, senderId: element.senderId,  status: element.status})
+    //     });
+
+    
+    //     //console.log("fetchedArray", array);
+    //     localStorage.setItem("savedEvents", JSON.stringify(array));
+    //     // console.log("arr", arr);
+    // })
     return array;
 }
 
@@ -98,6 +167,8 @@ function initEvents(){
 }
 
 export default function ContextWrapper(props){ 
+    const [timeBloque, setTimeBloque] =  useState();
+    const [descriptionBloque, setDescriptionBloque] = useState();
     const [monthIndex, setMonthIndex] =  useState(dayjs().month())
     const [userId, setUserId] =  useState(localStorage.getItem('formData') ? JSON.parse(localStorage.getItem('formData')).id : 0);
     const [userType, setUserType] =  useState(localStorage.getItem('formData') ? JSON.parse(localStorage.getItem('formData')).userType : "user")
@@ -126,6 +197,8 @@ export default function ContextWrapper(props){
     return (
         <GlobalContext.Provider 
         value={{ 
+            timeBloque, setTimeBloque,
+            descriptionBloque, setDescriptionBloque,
             monthIndex, setMonthIndex,
             eventTrigger, setEventTrigger,
             userId, setUserId,

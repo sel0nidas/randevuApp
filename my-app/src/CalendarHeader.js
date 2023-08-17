@@ -123,7 +123,7 @@ export default function CalendarHeader(){
                     </h2>
                 </div>
             </div>
-            <div className="flex flex-1 justify-center items-center text-xs sm:text-xs md:text-xs lg:text-sm 2xl:text-lg">
+            <div className="flex flex-1 justify-center items-center text-base opacity-0">
                 <div className="flex px-3">
                     <div className="flex items-center">
                         <div className="bg-gray-0 rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px'}}></div>
@@ -157,7 +157,7 @@ export default function CalendarHeader(){
                         <div className="flex">
                         <p style={{width: 'max-content'}}>Rejected / Another user has a process</p>
                         {/* Rejected / Another user has a process */}
-
+                        
                         </div>
                     </div>
                 </div>
@@ -169,8 +169,8 @@ export default function CalendarHeader(){
                 {userType2 == "doctor" && 
                 <></>
                 // <Button style={{marginRight: '0px'}} color="inherit" onClick={Logout}>
-                //     <NotificationsIcon />
-                // </Button> 
+                //    <NotificationsIcon />
+                // </Button>
                 }
 		        <Button style={{marginRight: '0px'}} color="inherit" onClick={Logout}>
                     <LogoutIcon />

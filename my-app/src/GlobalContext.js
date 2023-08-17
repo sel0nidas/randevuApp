@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 const GlobalContext = React.createContext({
+    timeBloque: "",
+    setTimeBloque: ()=>{},
+    descriptionBloque: "",
+    setDescriptionBloque: ()=>{},
     monthIndex: 0,
     setMonthIndex: (index) =>{},
     eventTrigger: 0,

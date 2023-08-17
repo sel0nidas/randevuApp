@@ -9,12 +9,13 @@ import CalendarHeader from './CalendarHeader';
 import dayjs from "dayjs";
 import GlobalContext from "./GlobalContext";
 import EventsBar from "./EventsBar";
+import EventModal from "./EventModal";
 
 const StaticDatePicker = () => {
   	const navigate = useNavigate();
 	
 	const [currentMonth, setCurrentMonth] = useState(getMonth())
-	const { monthIndex, showEventModal } = useContext(GlobalContext);
+	const { monthIndex, showEventModal, setShowEventModal, daySelected } = useContext(GlobalContext);
 	console.log(!localStorage.getItem('formData'));
 	useEffect(()=>{
 		if(!localStorage.getItem('formData'))
@@ -43,7 +44,7 @@ const StaticDatePicker = () => {
 	<React.Fragment>
 		
 	{/* <Navbar /> */}
-	
+
 	<div className="h-90dvh flex flex-columns" style={{flexDirection: 'column'}}>
 		<div>
 			<CalendarHeader />
@@ -87,10 +88,53 @@ const StaticDatePicker = () => {
 				<div className="col-md-12">
 					<Month month={currentMonth}/>
 				</div>
+				<div className="col-md-12">
+					<div className="flex w-100 mt-1 justify-center items-center text-base">
+            	    	<div className="flex px-3">
+            	    	    <div className="flex items-center">
+            	    	        <div className="bg-gray-0 rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px'}}></div>
+            	    	    </div>
+            	    	    <div className="px-2">
+            	    	        Available
+            	    	    </div>
+            	    	</div>
+            	    	<div className="flex px-3">
+            	    	    <div className="flex items-center">
+            	    	        <div className="bg-yellow-200 rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px'}}></div>
+            	    	    </div>
+            	    	    <div className="px-2">
+            	    	        Waiting
+            	    	    </div>
+            	    	</div>
+            	    	<div className="flex px-3">
+            	    	    <div className="flex items-center">
+            	    	        <div className="bg-green-200 rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px'}}></div>
+            	    	    </div>
+            	    	    <div className="px-2">
+            	    	        Accepted 
+            	    	        {/* {userType2 === "doctor" ? "Full" : "Accepted"} */}
+            	    	    </div>
+            	    	</div>
+            	    	<div className="flex px-3">
+            	    	    <div className="flex items-center">
+            	    	        <div className="rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px', background: "rgb(255, 111, 111)"}}></div>
+            	    	    </div>
+            	    	    <div className="px-2">
+            	    	        <div className="flex">
+            	    	        <p style={{width: 'max-content'}}>Rejected / Another user has a process</p>
+            	    	        {/* Rejected / Another user has a process */}
+
+            	    	        </div>
+            	    	    </div>
+            	    	</div>
+            		</div>
+				</div>
 			</div>
 			
 			<div className="col-md-3 border-top border-left p-3">
 				<EventsBar />
+				
+				{showEventModal && <EventModal />}
 			</div>
 		</div>
 	</div>

@@ -59,6 +59,9 @@ let array = [
     { day: daySelected, time: "15:00", status: "available" },
   ];
 
+  function isDateOutOfRange(){
+    return (daySelected.isBefore(dayjs()) === false && daySelected.isBefore(dayjs().add(60, 'day')) === true) || daySelected.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
+  }
 
   useEffect(() => {
     const events = JSON.parse(localStorage.getItem('savedEvents')).filter(
@@ -124,7 +127,7 @@ let array = [
             </div>
           ))
         } */}
-
+      
       {dayEvents.map((evt, idx) => {
         var index = array.findIndex((o) => o.time == evt.title);
         if (index >= 0) array[index].status = evt.status;
@@ -132,9 +135,7 @@ let array = [
       })}
       {
         (
-        daySelected.isBefore(dayjs()) === false
-            ||
-          daySelected.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
+          isDateOutOfRange()
         )
         
         ?
@@ -152,6 +153,7 @@ let array = [
               day={evt.day}
               time={evt.time}
               statusState={evt.status}
+              description={evt.description}
               key={id}
               type={"massive"}
             />
@@ -160,7 +162,7 @@ let array = [
       </div>)
       :
       <div className="h-100 flex items-center">
-        The day is before today and you are absolutely unable to send an appointment request for that day.
+        {/* The day is out of expected time range and you are absolutely unable to for this day. */}
       </div>
       }
     </div>
