@@ -1,0 +1,47 @@
+  {/* {array.map((evt, idx)=>{
+        console.log("yess",evt);
+          var elementArr = document.querySelectorAll([`[time="${evt}"]`]);
+          if(elementArr.length > 0){
+            elementArr.forEach(element=>{
+              if(!dayEvents.includes(element))
+              element.setAttribute("status", "available")
+            })
+          }
+      })
+      } */}
+
+
+// array.map((element, idx) => (
+            // <div className="px-1 col-md-6">
+            //     <div
+            //         dayId={day+""+element}
+            //         dayDate={day.format("DD-MM-YY")}
+            //         time={element}
+            //         status={status}
+            //         onClick={(e)=>setTitleAsTime(e.target.getAttribute('dayDate'))}//e.target.getAttribute('time')
+            //       className={`bg-blue-200 p-1 m-auto text-gray-600 text-xs rounded truncate flex-1 flex justify-center`}//${evt.label} indicator on classNames to set the bg-color
+            //     >
+            //         {element}
+            //     </div>
+            // </div>
+            // ))
+            
+
+
+{/* {dayEvents.map((evt, idx) => {
+            
+        console.log("tasd",evt)
+        try {
+            var element = document.querySelector([`[dayid="${evt.day}${evt.title}"]`])
+            if(element)
+              //element.setAttribute("status", "pending");
+            
+            setStatus("pending")
+            
+            console.log("TAGGED",element, evt.day+""+evt.title);
+            
+        } catch (error) {
+            console.log("Something happened on loading status of events",error)
+        }
+        return null;
+        })} */}
