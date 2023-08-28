@@ -312,7 +312,11 @@ export default function TimeBlock({ day, time, rowIdx, statusState, description,
             </>
             )
             }
-
+            {(statusState == "anotherAppointment" && userType == "user") &&
+                <div>
+                    {}
+                </div>
+            }
             {
             (statusState == "accepted" && userType != "doctor") &&
             <div className="col-lg-8 col-md-4 hidden">

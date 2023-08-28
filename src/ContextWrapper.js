@@ -10,7 +10,7 @@ function savedEventsReducer(state, {type, payload}){
             return [...state,  payload];
 
         case "update":
-            console.log("insert1", state, payload)
+            console.log("update", state, payload)
             return state.filter(event => event.id === payload.id ? payload : event)
             
         case "delete":
@@ -22,8 +22,9 @@ function savedEventsReducer(state, {type, payload}){
 }
 
 const fetchEvents =  ()=> {
-
+ 
     var array = [];
+    var arrayPersonal = [];
     var daystowork = [];
     var senderId = 0;
     if(localStorage.getItem('formData')){
@@ -87,26 +88,23 @@ const fetchEvents =  ()=> {
                         element.status = "available"
                 }
 
-                array.push({title: element.title, day: new Date(element.date).getTime(), description: element.description, id: 1691269200000, receiverId: element.receiverId, senderId: element.senderId,  status: element.status})
+                arrayPersonal.push({title: element.title, day: new Date(element.date).getTime(), description: element.description, id: 1691269200000, receiverId: element.receiverId, senderId: element.senderId,  status: element.status})
                 //console.log("other appointments", array.findIndex(e=>e.receiverId != receiverId))
             });
-            
-            
-
             //console.log("fetchedArray", array);
-            localStorage.setItem("savedEvents", JSON.stringify(array));
+            localStorage.setItem("savedEvents2", JSON.stringify(arrayPersonal));
             // console.log("arr", arr);
         })
-        fetch(`http://localhost:52463/api/doctor/getwithuserid/10`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(x=>x.json()).then(y=>{
+        // fetch(`http://localhost:52463/api/doctor/getwithuserid/${receiverId}`, {
+        //         method: 'GET',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         }
+        //     }).then(x=>x.json()).then(y=>{
                 
-                console.log("kesinbak", JSON.parse(y.workdays)[0]);
-                localStorage.setItem('daystowork', y.workdays);
-            })
+        //         console.log("kesinbak", JSON.parse(y.workdays)[0]);
+        //         localStorage.setItem('daystowork', y.workdays);
+        //     })
 
        
     }

@@ -124,7 +124,7 @@ export default function CalendarHeader(){
                     </h2>
                 </div>
             </div>
-            <div className="flex flex-1 justify-center items-center text-base opacity-0">
+            <div className="flex flex-1 justify-center items-center text-base opacity-0 hidden">
                 <div className="flex px-3">
                     <div className="flex items-center">
                         <div className="bg-gray-0 rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px'}}></div>

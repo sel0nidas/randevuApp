@@ -4,12 +4,12 @@ import GlobalContext from "../GlobalContext";
 import { Alert, Button } from "@mui/material";
 import TimeBlock from "./TimeBlock";
 import "../Day.css"
-export default function Day({ day, rowIdx }) {
+export default function Day({ day, rowIdx, daystowork2 }) {
 
   const [status, setStatus] = useState('available');
   
   const [stateTest, setStateTest] = useState("");
-  const [daystowork, setDaystowork] = useState(localStorage.getItem('daystowork'))//['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']);
+  //const [daystowork, setDaystowork] = useState(JSON.parse(localStorage.getItem('daystowork')))//['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']);
 
   const [dayEvents, setDayEvents] = useState([]);
   var {
@@ -60,14 +60,18 @@ let array = [
 		(evt) =>
 		  dayjs(evt.day).format("DD-MM-YY") === day.format("DD-MM-YY")
 	  );
-	  setDayEvents(events);
+    const events2 = JSON.parse(localStorage.getItem('savedEvents2')).filter(
+      (evt) =>
+        dayjs(evt.day).format("DD-MM-YY") === day.format("DD-MM-YY")
+      );
+	  setDayEvents([...events, ...events2]);
 	  //console.log(status, "dayEvents",dayEvents)
 
   }, [savedEvents, day, eventTrigger]);
   
-  function isDayAvailableForDoctor(dayOfWeekString){
-      return daystowork.includes(dayOfWeekString);
-  }
+  // function isDayAvailableForDoctor(dayOfWeekString){
+  //     return daystowork.includes(dayOfWeekString);
+  // }
   
   function isBefore() {
     return !day.isBefore(dayjs()) || day.format("DD-MM-YY") === dayjs().format("DD-MM-YY") ? "cursor-pointer" : "";
@@ -151,7 +155,7 @@ let array = [
             (
               isDateInRange()
               &&
-              isDayAvailableForDoctor(day.format('ddd').toUpperCase())
+              true // isDayAvailableForDoctor(day.format('ddd').toUpperCase())
             )
             // &&
             // day.format("dddd") != "Saturday"

@@ -70,12 +70,6 @@ function App() {
       e.preventDefault();
       console.log("submit is triggered...")
       const url = "http://localhost:52463/api/user/register"
-
-      /*
-        headers: {
-           'Content-Type': 'application/json'
-        },
-      */
      try {
          const datatoSend = {
             "name": document.getElementById("username").value,
@@ -96,58 +90,37 @@ function App() {
          console.log(jsonData);
          console.log(UserName);
          //localStorage.setItem('formData', JSON.stringify(jsonData));
-         HandleSubmit2(e);
-         navigate("/login");
          
-
-     } catch (error) {
-      console.error(error);
-     }
-
-     
-      
-
-   }
-
-   async function HandleSubmit2 (e) {
-      e.preventDefault();
-      console.log("submit is triggered...")
-      const url = "http://localhost:52463/api/doctor/register"
-
-      /*
-        headers: {
-           'Content-Type': 'application/json'
-        },
-      */
-     try {
-         const datatoSend = {
-            "name": document.getElementById("username").value,
-            "doctorType": doctorType,
-            "workdays": ""
+         try {
+            const datatoSend2 = {
+               "name": ""+document.getElementById("username").value,
+               "doctorType": doctorType,
+               "workdays": '[]',
+               "userId": jsonData.id
+            }
+            const response2 =  await fetch("http://localhost:52463/api/doctor/register", {
+               method: 'POST',
+               headers: {
+                  'Content-Type': 'application/json'
+               },
+               body: JSON.stringify(datatoSend2)
+            })
+            
+            const jsonData2 = await response2.json();
+            console.log(jsonData2)
          }
-         const response =  await fetch(url, {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(datatoSend)
-         })
-
-         const jsonData = await response.json();
-         console.log(jsonData);
-         console.log(UserName);
-         // //localStorage.setItem('formData', JSON.stringify(jsonData));
-         // navigate("/login");
+         catch (error) {
+            console.error(error);
+           }
+         //navigate("/login");
          
 
      } catch (error) {
       console.error(error);
      }
-
-     
-      
-
    }
+
+
    /*
    function LoginAuthentication() {
          
@@ -183,7 +156,6 @@ function App() {
     
     <div className="loginMain">
         <div style={{width: '100dvw', height: '100dvh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            
             <form className='innerLoginBloque'>
                <h2 className='text-xl font-bold'>REGISTER</h2>
                <FormControl className='mt-3'>

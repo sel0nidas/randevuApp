@@ -29,7 +29,7 @@ export default function Settings(){
         try {
          const datatoSend = {
             "workdays": JSON.stringify(daystowork),
-            "userId": "10"
+            "userId": JSON.parse(localStorage.getItem('formData')).id
          }
          const response =  await fetch(url, {
             method: 'POST',

@@ -55,6 +55,7 @@ export default function EventsBar() {
 const fetchEvents =  ()=> {
 
   var array = [];
+  var arrayPersonal = [];
   var senderId = 0;
   if(localStorage.getItem('formData')){
       senderId = JSON.parse(localStorage.getItem('formData')).id;
@@ -90,12 +91,34 @@ const fetchEvents =  ()=> {
           }
           array.push({title: element.title, day: new Date(element.date).getTime(), description: element.description, id: 1691269200000, descriptionFromDoctor: element.descriptionFromDoctor ,receiverId: element.receiverId, senderId: element.senderId,  status: element.status})
       });
+      if(senderId != receiverId){
+        fetch(`http://localhost:52463/api/appointment/getusercalendar/${senderId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(x=>x.json()).then(y=>{
 
+            y.forEach(element => {
+
+                element.day = new Date(element.date).getTime()
+                element.id = 1691182800000
+
+                if(element.receiverId != receiverId){
+                    if(element.status == "accepted" || element.status == "pending")
+                        element.status = "anotherAppointment"
+                    else if(element.status == "rejected")
+                        element.status = "available"
+                }
+                array.push({title: element.title, day: new Date(element.date).getTime(), description: element.description, id: 1691269200000, receiverId: element.receiverId, senderId: element.senderId,  status: element.status})
+                //console.log("other appointments", array.findIndex(e=>e.receiverId != receiverId))
+            });
+        })
+      }
   
       //console.log("fetchedArray", array);
       localStorage.setItem("savedEvents", JSON.stringify(array));
-
-      // console.log("arr", arr);
+      setEventTrigger(Date.now());
   })
 
   // fetch(`http://localhost:52463/api/appointment/getusercalendar/${senderId}`, {
@@ -166,6 +189,14 @@ const fetchEvents =  ()=> {
   return array;
 }
 
+function fetchMain() {
+  fetchEvents();
+  setEventTrigger(Date.now());
+  setTimeout(() => {
+  setEventTrigger(Date.now());
+  }, 100);
+}
+
 
 let array = [
     { day: daySelected, time: "09:00", status: "available" },
@@ -173,7 +204,7 @@ let array = [
     { day: daySelected, time: "11:00", status: "available" },
     { day: daySelected, time: "13:00", status: "available" },
     { day: daySelected, time: "14:00", status: "available" },
-    { day: daySelected, time: "15:00", status: "available" },
+    { day: daySelected, time: "15:00", status: "available" }
   ];
 
   
@@ -182,10 +213,15 @@ let array = [
   }
 
   useEffect(() => {
-    const events = JSON.parse(localStorage.getItem('savedEvents')).filter(
+    
+	const events = JSON.parse(localStorage.getItem('savedEvents')).filter(
+		(evt) =>
+		  dayjs(evt.day).format("DD-MM-YY") === daySelected.format("DD-MM-YY")
+	  );
+    const events2 = JSON.parse(localStorage.getItem('savedEvents2')).filter(
       (evt) =>
         dayjs(evt.day).format("DD-MM-YY") === daySelected.format("DD-MM-YY")
-    );
+      );
     events.sort((a, b) => {
       const timeA = a.title;
       const timeB = b.title;
@@ -198,9 +234,9 @@ let array = [
       }
       return 0;
     });
-    setDayEvents(events);
+	  setDayEvents([...events, ...events2]);
     //console.log("filteredEvents", events);
-  }, [savedEvents, daySelected, eventTrigger, localStorage.getItem('savedEvents')]);
+  }, [savedEvents, daySelected, eventTrigger]);
 
   //   var testData = JSON.parse(localStorage.getItem('savedEvents'));
   //   console.log(testData)
@@ -221,11 +257,13 @@ let array = [
          <Button
          color="primary"
          onClick={()=>{
-            fetchEvents();
-            setEventTrigger(Date.now());
-         setTimeout(() => {
-            setEventTrigger(Date.now());
-         }, 100);}}
+          fetchEvents();
+          setEventTrigger(Date.now());
+          setTimeout(() => {
+          setEventTrigger(Date.now());
+          }, 100);
+          }
+        }
          class="bg-gray-950 hover:bg-gray-700 hover:transition-all transition-all text-white font-bold py-2.5 px-2.5 mr-3 rounded-full">
           <RefreshIcon />
         </Button>
