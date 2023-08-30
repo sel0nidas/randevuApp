@@ -3,9 +3,16 @@
     font-weight: bold;
 }
 
+@media only screen and (min-width: 2920px) {
+    .small-timebloque {
+      font-size: 1rem;
+    }
+}
+
 [status="anotherAppointment"]{
     background-color: rgb(191 219 254);/* rgb(191 219 254) rgb(171, 208, 254) rgb(113, 177, 255)*/
     transition: all 0.15s ease-in-out;
+    opacity: 0.5;
 }
 [status="anotherAppointment"].massive:hover{
     background-color: rgb(152, 193, 250);
@@ -15,6 +22,10 @@
     background-color: #fff;/* rgb(191 219 254) rgb(171, 208, 254) rgb(113, 177, 255)*/
     transition: all 0.15s ease-in-out;
 }
+/* [status="available"].small-timebloque{
+    border: 0 !important; 
+    display: none;
+} */
 [status="available"].massive:hover{
     background-color: rgb(214, 214, 214);
     transition: all 0.15s ease-in-out;

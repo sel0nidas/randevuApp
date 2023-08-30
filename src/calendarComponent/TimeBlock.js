@@ -5,11 +5,12 @@ import GlobalContext from "../GlobalContext";
 import { Button } from "@mui/material";
 import "../Day.css"
 import CloseIcon from '@mui/icons-material/Close';
+import InfoIcon from '@mui/icons-material/Info';
 import DoneIcon from '@mui/icons-material/Done';
 import Alert from '@mui/material/Alert';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function TimeBlock({ day, time, rowIdx, statusState, description, descriptionFromDoctor,  type }) {
+export default function TimeBlock({ day, time, rowIdx, statusState, description, descriptionFromDoctor, type, receiverId, name }) {
     const [myStatus,setMyStatus] = useState();
     const { daySelected, dispatchCalEvent, selectedEvent, eventTrigger, setEventTrigger, setShowEventModal, timeBloque, setTimeBloque, setDescriptionBloque, setDescriptionBloquePatient, setDescriptionBloqueDoctor, descriptionBloquePatient, setStatusType} = useContext(GlobalContext);
     const [title, setTitle] = useState(
@@ -33,6 +34,7 @@ export default function TimeBlock({ day, time, rowIdx, statusState, description,
     
     useEffect(() => {
         setUserType("user");
+        console.log("name", name);
         try {
             const formData = localStorage.getItem('formData');
             if (!formData) {
@@ -284,10 +286,10 @@ export default function TimeBlock({ day, time, rowIdx, statusState, description,
         {type=="small" ?
         (<div className="text-sm text-center rounded-sm py-0 small-timebloque" status = {statusState}>{time}</div>):
         (
-        <div className="text-md text-center rounded-sm mt-2 px-3 py-2 row hover massive font-bold border-2 border-gray-950" 
+        <div className="text-md text-center rounded-sm mt-2 px-3 py-2 row hover massive font-bold border-2 border-gray-950 h-16 justify-evenly" 
         onClick={()=>{setTimeBloque(time); setStatusType(statusState); setDescriptionBloquePatient(description); setDescriptionBloqueDoctor(descriptionFromDoctor); if(statusState!="rejected" && ((userType == "doctor" && statusState == "available") == false) ){setShowEventModal(true)} }} 
         status = {statusState}>
-            <div className="col-lg-4 col-md-12 flex justify-center items-center">{time}</div>
+            <div className="col-lg-3 col-md-12 flex justify-center items-center">{time}</div>
             {userType != "doctor" ? (
             statusState == "available" &&
             <div className="col-lg-8 col-md-4 hidden">
@@ -313,10 +315,32 @@ export default function TimeBlock({ day, time, rowIdx, statusState, description,
             )
             }
             {(statusState == "anotherAppointment" && userType == "user") &&
-                <div>
-                    {}
+                <div className="col-lg-6 col-md-6 justify-end ">
+                    {/* {"Doctor ID: "+receiverId} */}
+                    {""+name}
+                    <br></br>
+                    {`
+                    Doctor ID: ${receiverId}
+
+                    `}
                 </div>
             }
+            <div className="col-lg-3 col-md-3 flex items-center justify-center">
+                {
+                (statusState != "available") ?
+
+                <div className="rounded-md p-2 bg-dark">
+                    <InfoIcon style={{ color: "white" }} />
+                </div>
+                :
+                (
+                userType == "user" &&
+                <div className="rounded-md p-2 bg-blue-500">
+                    <AddIcon style={{ color: "white" }} />
+                </div>
+                )
+                }
+            </div>
             {
             (statusState == "accepted" && userType != "doctor") &&
             <div className="col-lg-8 col-md-4 hidden">

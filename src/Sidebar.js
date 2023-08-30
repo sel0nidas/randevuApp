@@ -6,10 +6,13 @@ import DoneIcon from '@mui/icons-material/Done';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import "./CalendarSidebar.css"
 import GlobalContext from "./GlobalContext";
+import BadgeIcon from '@mui/icons-material/Badge';
+import InfoIcon from '@mui/icons-material/Info';
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar({time, description}){
-    
-    const { daySelected, dispatchCalEvent, setEventTrigger, selectedEvent, timeBloque, setTimeBloque, setShowEventModal, descriptionBloque, setDescriptionBloque, descriptionBloquePatient, userType, statusType, descriptionBloqueDoctor, setDescriptionBloqueDoctor} = useContext(GlobalContext);
+    var navigate = useNavigate();
+    const { daySelected, dispatchCalEvent, setEventTrigger, selectedEvent, timeBloque, setTimeBloque, setShowEventModal, descriptionBloque, setDescriptionBloque, descriptionBloquePatient, userType, statusType, descriptionBloqueDoctor, setDescriptionBloqueDoctor, anotherDoctor} = useContext(GlobalContext);
     const [title, setTitle] = useState(
         selectedEvent ? selectedEvent.title : "");
 
@@ -129,12 +132,29 @@ export default function Sidebar({time, description}){
 
     return (
         <div className="calendar-form">
-            <h1 className="text-xl font-bold">Panel</h1>
-
             {/* <Button className="w-100 border rounded py-2 px-4 mt-5" color="error" onClick={fetchTest}>Refresh</Button>
              */}
-            <form className="mt-2 w-100">
-            
+            <form className="w-100">
+            <div className="flex items-center flex-column">
+                {statusType == "anotherAppointment" &&
+                <div className="flex flex-column items-center">
+                    <p className="bg-red-300 p-2">This appointment request is from another doctor.</p>
+                    <p className="mt-2">Request Situation is: XXXXXX</p>
+                    <div className="px-5 mt-1">
+                        <Button variant="contained" onClick={()=>{localStorage.setItem("appointmentGiver", 15); navigate("/login")}}>Go To that Doctor</Button>
+                    </div>
+                    <div className="px-5 mt-1">
+                        <Button variant="contained" color="error">Cancel Appointment</Button>
+                    </div>
+                    <div className="flex items-center">
+                        <p>Your Doctor is: Ömer Aktan</p>
+                        <Button>
+                            <InfoIcon />
+                        </Button>
+                    </div>
+                </div>
+                }
+            </div>
             {/* <TextField
               id="filled-number"
               label="Receiver ID"
@@ -182,7 +202,7 @@ export default function Sidebar({time, description}){
                         </div>
                         <TextareaAutosize id="textarea" className="bg-light min-h-24 max-h-60 mt-2 w-100" 
                         maxLength={50}
-                        style={{minHeight: "48px"}} minRows={5} name="descriptionFromDoctor" onChange={ (event)=>{setDescriptionBloqueDoctor(event.target.value);} } placeholder="Doctor text is here..."/>
+                        style={{minHeight: "20px"}} minRows={5} name="descriptionFromDoctor" onChange={ (event)=>{setDescriptionBloqueDoctor(event.target.value);} } placeholder="Doctor text is here..."/>
                         
                     </div>
                 }

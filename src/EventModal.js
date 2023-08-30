@@ -5,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Button } from '@mui/material';
 import EventsBar from './EventsBar';
 import Sidebar from './Sidebar';
+import BadgeIcon from '@mui/icons-material/Badge';
 
 export default function EventModal() {
 
@@ -31,7 +32,10 @@ export default function EventModal() {
         }}
         >
             <form id="eventModalMainForm" className='bg-white rounded-lg shadow-2xl w-1/4 z-20  pb-7' >
-                <header className='px-4 py-2 flex justify-end items-center'>
+                <header className='px-4 py-2 flex justify-between items-center mt-1'>
+                    <div>
+                        <h1 className='text-xl font-bold'>Appointment Details</h1>
+                    </div>
                     <button onClick={()=>{setShowEventModal(false)}}>
                         <span className='material-icons-outlined text-gray-400'>
                             <CloseIcon />
@@ -46,6 +50,8 @@ export default function EventModal() {
                         <input type="text" />
                     </div> */}
                 </div>
+                
+
                 <footer className="flex justify-end border-t p-3 mt-5 d-none">
                     <Button
                     type="submit"

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 const GlobalContext = React.createContext({
     timeBloque: "",
     setTimeBloque: ()=>{},
+    anotherDoctor: "",
+    setAnotherDoctor: ()=>{},
     statusType: "",
     setStatusType: ()=>{},
     descriptionBloquePatient: "",

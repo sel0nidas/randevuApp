@@ -16,12 +16,7 @@ const StaticDatePicker = () => {
 	
 	const [currentMonth, setCurrentMonth] = useState(getMonth())
 	const { monthIndex, showEventModal, setShowEventModal, daySelected } = useContext(GlobalContext);
-	console.log(!localStorage.getItem('formData'));
-	useEffect(()=>{
-		if(!localStorage.getItem('formData'))
-			navigate("/login")
-	}, []);
-
+	
 	useEffect(()=>{
 		setCurrentMonth(getMonth(monthIndex))
 	}, [monthIndex]);
@@ -92,34 +87,38 @@ const StaticDatePicker = () => {
 				<div className="col-md-12">
 					<Month month={currentMonth}/>
 				</div>
-				<div className="col-md-12">
-					<div className="flex w-100 mt-1 justify-center items-center text-base">
+				<div className="col-md-12 w-100 flex justify-center">
+					<div className="flex w-100 mt-1 justify-center items-center text-base row bg-slate-300 font-semibold max-w-min py-3 border-2 border-dashed border-black">
+						<div className="col-md-12 flex justify-center">
+
             	    	<div className="flex px-3">
-            	    	    <div className="flex items-center">
-            	    	        <div className="bg-gray-0 rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px'}}></div>
-            	    	    </div>
-            	    	    <div className="px-2">
-            	    	        Available
-            	    	    </div>
-            	    	</div>
-            	    	<div className="flex px-3">
-            	    	    <div className="flex items-center">
-            	    	        <div className="bg-yellow-200 rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px'}}></div>
-            	    	    </div>
-            	    	    <div className="px-2">
-            	    	        Waiting
-            	    	    </div>
-            	    	</div>
-            	    	<div className="flex px-3">
-            	    	    <div className="flex items-center">
-            	    	        <div className="bg-green-200 rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px'}}></div>
-            	    	    </div>
-            	    	    <div className="px-2">
-            	    	        Accepted 
-            	    	        {/* {userType2 === "doctor" ? "Full" : "Accepted"} */}
-            	    	    </div>
-            	    	</div>
-            	    	<div className={`flex px-3 ${isDoctor()}`}>
+            	    		<div className="flex items-center">
+            	    		        <div className="bg-white rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px'}}></div>
+            	    		    </div>
+            	    		    <div className="px-2">
+            	    		        Available
+            	    		    </div>
+            	    		</div>
+            	    		<div className="flex px-3">
+            	    		    <div className="flex items-center">
+            	    		        <div className="bg-yellow-200 rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px'}}></div>
+            	    		    </div>
+            	    		    <div className="px-2">
+            	    		        Waiting
+            	    		    </div>
+            	    		</div>
+            	    		<div className="flex px-3">
+            	    		    <div className="flex items-center">
+            	    		        <div className="bg-green-200 rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px'}}></div>
+            	    		    </div>
+            	    		    <div className="px-2">
+            	    		        Accepted 
+            	    		        {/* {userType2 === "doctor" ? "Full" : "Accepted"} */}
+            	    		    </div>
+            	    		</div>
+						</div>
+						<div className="col-md-12 flex justify-center">
+            	    	<div className={`flex px-2 ${isDoctor()}`}>
             	    	    <div className="flex items-center">
             	    	        <div className="rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px', background: "rgb(255, 111, 111)"}}></div>
             	    	    </div>
@@ -129,16 +128,17 @@ const StaticDatePicker = () => {
             	    	        </div>
             	    	    </div>
             	    	</div>
-						<div className={`flex px-3 ${isDoctor()}`}>
+						<div className={`flex px-2 ${isDoctor()}`}>
             	    	    <div className="flex items-center">
             	    	        <div className="rounded-full border-gray-950 border-2" style={{width: '20px', height: '20px', background: "rgb(191 219 254)"}}></div>
             	    	    </div>
             	    	    <div className="px-2">
             	    	        <div className="flex">
-            	    	        <p style={{width: 'max-content'}}>You have an appointment from another doctor</p>
+            	    	        <p style={{width: 'max-content'}}>You have an appointment request for another doctor</p>
             	    	        </div>
             	    	    </div>
             	    	</div>
+						</div>
             		</div>
 				</div>
 			</div>

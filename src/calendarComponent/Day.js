@@ -7,9 +7,9 @@ import "../Day.css"
 export default function Day({ day, rowIdx, daystowork2 }) {
 
   const [status, setStatus] = useState('available');
-  
+    const [timestowork, setTimestowork] = useState(["09:00","10:00","11:00","13:00", "14:00", "15:00"])
   const [stateTest, setStateTest] = useState("");
-  //const [daystowork, setDaystowork] = useState(JSON.parse(localStorage.getItem('daystowork')))//['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']);
+  const [daystowork, setDaystowork] = useState(['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'])//['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']);
 
   const [dayEvents, setDayEvents] = useState([]);
   var {
@@ -46,14 +46,21 @@ export default function Day({ day, rowIdx, daystowork2 }) {
     localStorage.setItem("savedEvents", JSON.stringify(array));
     return jsonData;
 }
-let array = [
-    {date: day, time: '09:00', status: "available", description: "", descriptionFromDoctor: ""},
-    {date: day, time: '10:00', status: "available", description: "", descriptionFromDoctor: ""},
-    {date: day, time: '11:00', status: "available", description: "", descriptionFromDoctor: ""},
-    {date: day, time: '13:00', status: "available", description: "", descriptionFromDoctor: ""},
-    {date: day, time: '14:00', status: "available", description: "", descriptionFromDoctor: ""},
-    {date: day, time: '15:00', status: "available", description: "", descriptionFromDoctor: ""}
+let array2 = [
+    {date: day, time: '09:00', status: "available", description: "", descriptionFromDoctor: "", receiverId: 0, name: ""},
+    {date: day, time: '10:00', status: "available", description: "", descriptionFromDoctor: "", receiverId: 0, name: ""},
+    {date: day, time: '11:00', status: "available", description: "", descriptionFromDoctor: "", receiverId: 0, name: ""},
+    {date: day, time: '13:00', status: "available", description: "", descriptionFromDoctor: "", receiverId: 0, name: ""},
+    {date: day, time: '14:00', status: "available", description: "", descriptionFromDoctor: "", receiverId: 0, name: ""},
+    {date: day, time: '15:00', status: "available", description: "", descriptionFromDoctor: "", receiverId: 0, name: ""}
 ]
+
+let array = [];
+
+timestowork.forEach(time=>{
+  var objectToPushDefaultArray = {date: day, time: time, status: "available", description: "", descriptionFromDoctor: "", receiverId: 0, name: ""}
+  array.push(objectToPushDefaultArray)
+})
 
   useEffect(() => {
 	const events = JSON.parse(localStorage.getItem('savedEvents')).filter(
@@ -69,9 +76,9 @@ let array = [
 
   }, [savedEvents, day, eventTrigger]);
   
-  // function isDayAvailableForDoctor(dayOfWeekString){
-  //     return daystowork.includes(dayOfWeekString);
-  // }
+  function isDayAvailableForDoctor(dayOfWeekString){
+      return daystowork.includes(dayOfWeekString);
+  }
   
   function isBefore() {
     return !day.isBefore(dayjs()) || day.format("DD-MM-YY") === dayjs().format("DD-MM-YY") ? "cursor-pointer" : "";
@@ -130,7 +137,7 @@ let array = [
         </p>
       </header>
       <div
-        className={`flex-1 flex row col-md-12 justify-center hidden md:flex w-100 ${isBefore()} ${isDateInRangeClass()}`}
+        className={`flex-1 flex row col-md-12 justify-center hidden md:flex w-100 items-center max-h-min content-center ${isBefore()} ${isDateInRangeClass()}`}
       >
         
       {/* {console.log("test"+day.format('dddd'))} */}
@@ -141,21 +148,16 @@ let array = [
 			      	array[index].status = evt.status
               array[index].description = evt.description
               array[index].descriptionFromDoctor = evt.descriptionFromDoctor
-                  
+              array[index].receiverId = evt.receiverId
 			      }
         })}
-      
-      {
-        console.log("asx2", array, day.format("ddd"), day.format("DD-MM-YY"))
-      }
-      
       {
         array.map((evt, id)=>(
           (
             (
               isDateInRange()
               &&
-              true // isDayAvailableForDoctor(day.format('ddd').toUpperCase())
+              isDayAvailableForDoctor(day.format('ddd').toUpperCase())
             )
             // &&
             // day.format("dddd") != "Saturday"
@@ -164,8 +166,8 @@ let array = [
             
           )
           &&
-          <div className="px-0.5 py-0 col-md-6">
-            <TimeBlock day={evt.date} time={evt.time} description={evt.description} descriptionFromDoctor={evt.descriptionFromDoctor} statusState={evt.status} key={id} type={"small"}/>
+          <div className="px-0.5 py-0.5 col-md-6">
+            <TimeBlock day={evt.date} time={evt.time} description={evt.description} descriptionFromDoctor={evt.descriptionFromDoctor} statusState={evt.status} key={id} type={"small"} receiverId={evt.receiverId} />
           </div>
         ))
       }

@@ -212,6 +212,19 @@ let array = [
     return (daySelected.isBefore(dayjs()) === false && daySelected.isBefore(dayjs().add(60, 'day')) === true) || daySelected.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
   }
 
+  // events.sort((a, b) => {
+    //   const timeA = a.title;
+    //   const timeB = b.title;
+
+    //   if (timeA < timeB) {
+    //     return -1;
+    //   }
+    //   if (timeA > timeB) {
+    //     return 1;
+    //   }
+    //   return 0;
+    // });
+
   useEffect(() => {
     
 	const events = JSON.parse(localStorage.getItem('savedEvents')).filter(
@@ -222,19 +235,10 @@ let array = [
       (evt) =>
         dayjs(evt.day).format("DD-MM-YY") === daySelected.format("DD-MM-YY")
       );
-    events.sort((a, b) => {
-      const timeA = a.title;
-      const timeB = b.title;
-
-      if (timeA < timeB) {
-        return -1;
-      }
-      if (timeA > timeB) {
-        return 1;
-      }
-      return 0;
-    });
+    
 	  setDayEvents([...events, ...events2]);
+
+    console.log("testASDASDFetched", dayEvents, [...events, ...events2]);
     //console.log("filteredEvents", events);
   }, [savedEvents, daySelected, eventTrigger]);
 
@@ -254,14 +258,16 @@ let array = [
           <h3 className="text-md">{daySelected.format("DD MMMM YYYY")}</h3>
         </div>
         <div className="grid-cols-3 flex justify-end">
-         <Button
+        <Button
          color="primary"
          onClick={()=>{
+          console.log("testASDASD");
           fetchEvents();
-          setEventTrigger(Date.now());
+          console.log("EventTriggerValueBefore", eventTrigger);
           setTimeout(() => {
-          setEventTrigger(Date.now());
+            setEventTrigger(Date.now());
           }, 100);
+          console.log("EventTriggerValue", eventTrigger);
           }
         }
          class="bg-gray-950 hover:bg-gray-700 hover:transition-all transition-all text-white font-bold py-2.5 px-2.5 mr-3 rounded-full">
@@ -298,13 +304,14 @@ let array = [
             </div>
           ))
         } */}
-      
       {dayEvents.map((evt, idx) => {
         var index = array.findIndex((o) => o.time == evt.title);
         if (index >= 0){
           array[index].status = evt.status;
           array[index].description = evt.description;
           array[index].descriptionFromDoctor = evt.descriptionFromDoctor;
+          array[index].receiverId = evt.receiverId;
+          array[index].name = evt.name;
         } 
         //console.log(index, array[index]);
       })}
@@ -332,6 +339,8 @@ let array = [
               descriptionFromDoctor={evt.descriptionFromDoctor}
               key={id}
               type={"massive"}
+              receiverId={evt.receiverId}
+              name={evt.name}
             />
           </div>
         ))}

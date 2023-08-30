@@ -10,15 +10,26 @@ export default function Settings(){
     const navigate = useNavigate();
 
     const [daystowork, setDaystowork] = React.useState(() => JSON.parse(localStorage.getItem('daystowork')));
+    const [timestowork, setTimestowork] = React.useState(() => localStorage.getItem('timestowork') ? JSON.parse(localStorage.getItem('timestowork')) : []);
 
-    const handleFormat = (event, newFormats) => {
+    const handleFormatDay = (event, newFormats) => {
     setDaystowork(newFormats);
     console.log(newFormats);
-    const arr = [];
+    let arr = [];
     newFormats.forEach(element => {
         arr.push(element);
     });
     localStorage.setItem("daystowork", JSON.stringify(arr))
+    };
+
+    const handleFormatTime = (event, newFormats) => {
+    setTimestowork(newFormats);
+    console.log(newFormats);
+    let arr = [];
+    newFormats.forEach(element => {
+        arr.push(element);
+    });
+    localStorage.setItem("timestowork", JSON.stringify(arr))
     };
 
     async function saveDaystoWorkChanges(e) {
@@ -28,6 +39,7 @@ export default function Settings(){
 
         try {
          const datatoSend = {
+            "worktimes": JSON.stringify(timestowork),
             "workdays": JSON.stringify(daystowork),
             "userId": JSON.parse(localStorage.getItem('formData')).id
          }
@@ -66,7 +78,7 @@ export default function Settings(){
                 <ToggleButtonGroup
                 className=""
                 value={daystowork}
-                onChange={handleFormat}
+                onChange={handleFormatDay}
                 aria-label="text formatting"
                 >
                     <ToggleButton className="!text-2xl p-5" value="MON" aria-label="bold" color="success">
@@ -89,6 +101,45 @@ export default function Settings(){
                     </ToggleButton>
                     <ToggleButton className="!text-2xl p-5" value="SUN" aria-label="bold2" color="success">
                         SUN
+                    </ToggleButton>
+                </ToggleButtonGroup>
+            </div>
+            <div className="mt-2">
+                <ToggleButtonGroup
+                className="row"
+                value={timestowork}
+                onChange={handleFormatTime}
+                aria-label="text formatting"
+                >
+                    <ToggleButton className="!text-2xl p-5 col-md-2" value="09:00" aria-label="bold" color="success">
+                        09:00
+                    </ToggleButton>
+                    <ToggleButton className="!text-2xl p-5 col-md-2" value="10:00" aria-label="bold" color="success">
+                        10:00
+                    </ToggleButton>
+                    <ToggleButton className="!text-2xl p-5 col-md-2" value="11:00" aria-label="bold" color="success">
+                        11:00
+                    </ToggleButton>
+                    <ToggleButton className="!text-2xl p-5 col-md-2" value="12:00" aria-label="bold" color="success">
+                        12:00
+                    </ToggleButton>
+                    <ToggleButton className="!text-2xl p-5 col-md-2" value="13:00" aria-label="bold" color="success">
+                        13:00
+                    </ToggleButton>
+                    <ToggleButton className="!text-2xl p-5 col-md-2" value="14:00" aria-label="bold" color="success">
+                        14:00
+                    </ToggleButton>
+                    <ToggleButton className="!text-2xl p-5 col-md-2" value="15:00" aria-label="bold" color="success">
+                        15:00
+                    </ToggleButton>
+                    <ToggleButton className="!text-2xl p-5 col-md-2" value="16:00" aria-label="bold" color="success">
+                        16:00
+                    </ToggleButton>
+                    <ToggleButton className="!text-2xl p-5 col-md-2" value="17:00" aria-label="bold" color="success">
+                        17:00
+                    </ToggleButton>
+                    <ToggleButton className="!text-2xl p-5 col-md-2" value="18:00" aria-label="bold" color="success">
+                        18:00
                     </ToggleButton>
                 </ToggleButtonGroup>
                 

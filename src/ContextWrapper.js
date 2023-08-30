@@ -42,9 +42,7 @@ const fetchEvents =  ()=> {
             'Content-Type': 'application/json'
         }
     }).then(x=>x.json()).then(y=>{
-
         y.forEach(element => {
-            //console.log("elementCheck", new Date(element.date).getTime())
             element.day = new Date(element.date).getTime()
             element.id = 1691182800000
             //console.log("TESTEST", receiverId, senderId, element, element.senderId != senderId)
@@ -59,14 +57,10 @@ const fetchEvents =  ()=> {
                     element.status = "available"
                 }
             }
-            array.push({title: element.title, day: new Date(element.date).getTime(), description: element.description, id: 1691269200000, descriptionFromDoctor: element.descriptionFromDoctor ,receiverId: element.receiverId, senderId: element.senderId,  status: element.status})
+            array.push({title: element.title, day: new Date(element.date).getTime(), description: element.description, id: 1691269200000, descriptionFromDoctor: element.descriptionFromDoctor ,receiverId: element.receiverId, name: element.name, senderId: element.senderId,  status: element.status})
         });
-
-    
         //console.log("fetchedArray", array);
         localStorage.setItem("savedEvents", JSON.stringify(array));
-
-        // console.log("arr", arr);
     })
     if(senderId != receiverId){
         fetch(`http://localhost:52463/api/appointment/getusercalendar/${senderId}`, {
@@ -77,18 +71,16 @@ const fetchEvents =  ()=> {
         }).then(x=>x.json()).then(y=>{
 
             y.forEach(element => {
-
                 element.day = new Date(element.date).getTime()
                 element.id = 1691182800000
-
                 if(element.receiverId != receiverId){
                     if(element.status == "accepted" || element.status == "pending")
                         element.status = "anotherAppointment"
                     else if(element.status == "rejected")
                         element.status = "available"
                 }
-
-                arrayPersonal.push({title: element.title, day: new Date(element.date).getTime(), description: element.description, id: 1691269200000, receiverId: element.receiverId, senderId: element.senderId,  status: element.status})
+                if(element.status === "anotherAppointment")
+                arrayPersonal.push({title: element.title, day: new Date(element.date).getTime(), description: element.description, descriptionFromDoctor: element.descriptionFromDoctor, id: 1691269200000, receiverId: element.receiverId, name: element.name, senderId: element.senderId,  status: element.status})
                 //console.log("other appointments", array.findIndex(e=>e.receiverId != receiverId))
             });
             //console.log("fetchedArray", array);
@@ -105,13 +97,7 @@ const fetchEvents =  ()=> {
         //         console.log("kesinbak", JSON.parse(y.workdays)[0]);
         //         localStorage.setItem('daystowork', y.workdays);
         //     })
-
-       
     }
-
-
-
-
 
     // fetch(`http://localhost:52463/api/appointment/getcalendar/${receiverId}`, {
     //     method: 'GET',
@@ -160,9 +146,7 @@ function initEvents(){
     //         arr.push(element);
     //     });
     // })
-    
     // console.log("test1111", arr);
-    
     // for (let index = 0; index < arr.length; index++) {
     //     var testDate = String(new Date(arr[index].date).getDate()).padStart(2, "0")+"-"+String(new Date(arr[index].date).getMonth()+1).padStart(2, "0")+"-"+ new Date(arr[index].date).getFullYear()
     //     console.log("testDate", testDate)
@@ -180,6 +164,7 @@ function initEvents(){
 
 export default function ContextWrapper(props){ 
     const [timeBloque, setTimeBloque] =  useState();
+    const [anotherDoctor, setAnotherDoctor] =  useState(null);
     const [statusType, setStatusType] = useState();
     const [descriptionBloquePatient, setDescriptionBloquePatient] = useState();
     const [descriptionBloqueDoctor, setDescriptionBloqueDoctor] = useState();
@@ -214,6 +199,7 @@ export default function ContextWrapper(props){
         <GlobalContext.Provider 
         value={{ 
             timeBloque, setTimeBloque,
+            anotherDoctor, setAnotherDoctor,
             statusType, setStatusType,
             descriptionBloquePatient, setDescriptionBloquePatient,
             descriptionBloqueDoctor, setDescriptionBloqueDoctor,
