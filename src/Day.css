@@ -18,14 +18,16 @@
     background-color: rgb(152, 193, 250);
     transition: all 0.15s ease-in-out;
 }
-[status="available"]{
-    background-color: #fff;/* rgb(191 219 254) rgb(171, 208, 254) rgb(113, 177, 255)*/
-    transition: all 0.15s ease-in-out;
-}
+
 /* [status="available"].small-timebloque{
     border: 0 !important; 
     display: none;
 } */
+
+[status="available"]{
+    background-color: #fff;/* rgb(191 219 254) rgb(171, 208, 254) rgb(113, 177, 255)*/
+    transition: all 0.15s ease-in-out;
+}
 [status="available"].massive:hover{
     background-color: rgb(214, 214, 214);
     transition: all 0.15s ease-in-out;
@@ -58,6 +60,13 @@
 }
 [status="rejected"].massive:hover{
     background-color: rgb(233, 134, 134);
+    transition: all 0.15s ease-in-out;
+}
+[status="canceled"]{
+    background-color:  rgb(224, 224, 224) !important; /* rgb(254 202 202) */
+    text-decoration-line: line-through;
+    text-decoration-thickness: 2px;
+    color: black;
     transition: all 0.15s ease-in-out;
 }
 /* [partOfWeek="weekend"]{

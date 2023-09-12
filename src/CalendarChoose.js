@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import "./CalendarChoose.css";
 import { useNavigate } from "react-router-dom";
+import { fetchEvents } from "./util";
 
 export default function CalendarChoose() {
 
@@ -44,7 +45,7 @@ export default function CalendarChoose() {
                         <div className="col-md-2">Gender</div>
                     </div>
                     {userList.map((evt)=>(
-                        <div className="col-md-12 row flex justify-center items-stretch py-3 cursor-pointer border-2 bg-gray-300 itemOnListofUsers" key={evt.id} onClick={()=>{localStorage.setItem("appointmentGiver", evt.id); navigate(`/calendar`)}}>
+                        <div className="col-md-12 row flex justify-center items-stretch py-3 cursor-pointer border-2 bg-gray-300 itemOnListofUsers" key={evt.id} onClick={()=>{localStorage.setItem("appointmentGiver", evt.id); fetchEvents(); navigate(`/calendar`)}}>
                             <div className="col-md-2 h-full">{evt.id}</div>
                             <div className="col-md-5 h-full">{evt.name}</div>
                             <div className="col-md-3 h-full">{evt.doctorType}</div>

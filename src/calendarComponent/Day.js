@@ -4,8 +4,8 @@ import GlobalContext from "../GlobalContext";
 import { Alert, Button } from "@mui/material";
 import TimeBlock from "./TimeBlock";
 import "../Day.css"
-export default function Day({ day, rowIdx, daystowork2 }) {
-
+export default function Day({ day, key, rowIdx }) {
+  
   const [status, setStatus] = useState('available');
     const [timestowork, setTimestowork] = useState(["09:00","10:00","11:00","13:00", "14:00", "15:00"])
   const [stateTest, setStateTest] = useState("");
@@ -19,6 +19,7 @@ export default function Day({ day, rowIdx, daystowork2 }) {
     setSelectedEvent,
     monthIndex,
     setMonthIndex,
+    weekIndex,
 	eventTrigger,
 	setEventTrigger
   } = useContext(GlobalContext);
@@ -91,7 +92,7 @@ timestowork.forEach(time=>{
   }
   
   function isDateInRange(){
-    return (day.isBefore(dayjs()) === false && day.isBefore(dayjs().add(60, 'day')) === true) || day.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
+    return (day.isBefore(dayjs()) === false && day.isBefore(dayjs().add(150, 'day')) === true) || day.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
   }
   
   function isDateInRangeClass() {
@@ -109,6 +110,7 @@ timestowork.forEach(time=>{
     }
 
   return (
+    //(rowIdx == weekIndex || rowIdx == weekIndex+1) &&
     <div className={`border border-gray-200 flex flex-col overflow-y-auto ${isBefore()} ${isNextOrPrevMonth()} hover:bg-blue-100`}
     partOfWeek={isWeekend(day)}
     status={status}
@@ -167,7 +169,7 @@ timestowork.forEach(time=>{
           )
           &&
           <div className="px-0.5 py-0.5 col-md-6">
-            <TimeBlock day={evt.date} time={evt.time} description={evt.description} descriptionFromDoctor={evt.descriptionFromDoctor} statusState={evt.status} key={id} type={"small"} receiverId={evt.receiverId} />
+            <TimeBlock day={evt.date} time={evt.time} description={evt.description} descriptionFromDoctor={evt.descriptionFromDoctor} statusState={evt.status} key={id} type={"small"} receiverId={evt.receiverId} doctor={evt.receiverUser} />
           </div>
         ))
       }

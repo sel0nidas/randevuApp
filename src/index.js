@@ -11,6 +11,7 @@ import reportWebVitals from './reportWebVitals';
 import ContextWrapper from './ContextWrapper';
 import Choose from './CalendarChoose'
 import Settings from './Settings'
+import PageNotFound from './PageNotFound';
 //<App />
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -29,8 +30,10 @@ root.render(
       <ContextWrapper>
 		    <Calendar />
       </ContextWrapper>
+      
       } />
       <Route exact path='/settings' element={<Settings />} />
+      <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>
     {/* <ContextWrapper>

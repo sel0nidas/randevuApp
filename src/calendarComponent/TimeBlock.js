@@ -10,12 +10,13 @@ import DoneIcon from '@mui/icons-material/Done';
 import Alert from '@mui/material/Alert';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function TimeBlock({ day, time, rowIdx, statusState, description, descriptionFromDoctor, type, receiverId, name }) {
+export default function TimeBlock({ day, time, rowIdx, statusState, description, descriptionFromDoctor, type, receiverId, name, doctor, realStatus }) {
     const [myStatus,setMyStatus] = useState();
-    const { daySelected, dispatchCalEvent, selectedEvent, eventTrigger, setEventTrigger, setShowEventModal, timeBloque, setTimeBloque, setDescriptionBloque, setDescriptionBloquePatient, setDescriptionBloqueDoctor, descriptionBloquePatient, setStatusType} = useContext(GlobalContext);
+    const { daySelected, dispatchCalEvent, selectedEvent, eventTrigger, setEventTrigger, setShowEventModal, timeBloque, setTimeBloque, setDescriptionBloque, setDescriptionBloquePatient, setDescriptionBloqueDoctor, descriptionBloquePatient, setStatusType, setSelectedUser} = useContext(GlobalContext);
     const [title, setTitle] = useState(
         selectedEvent ? selectedEvent.title : "");
     
+
     const navigate = useNavigate();
     //console.log(!localStorage.getItem('formData'));
     // useEffect(()=>{
@@ -286,8 +287,8 @@ export default function TimeBlock({ day, time, rowIdx, statusState, description,
         {type=="small" ?
         (<div className="text-sm text-center rounded-sm py-0 small-timebloque" status = {statusState}>{time}</div>):
         (
-        <div className="text-md text-center rounded-sm mt-2 px-3 py-2 row hover massive font-bold border-2 border-gray-950 h-16 justify-evenly" 
-        onClick={()=>{setTimeBloque(time); setStatusType(statusState); setDescriptionBloquePatient(description); setDescriptionBloqueDoctor(descriptionFromDoctor); if(statusState!="rejected" && ((userType == "doctor" && statusState == "available") == false) ){setShowEventModal(true)} }} 
+        <div className="text-sm text-center rounded-sm mt-2 px-3 py-2 row hover massive font-bold border-2 border-gray-950 h-16 justify-evenly" 
+        onClick={()=>{setTimeBloque(time); setStatusType(statusState); setDescriptionBloquePatient(description); setDescriptionBloqueDoctor(descriptionFromDoctor); setSelectedUser(doctor); localStorage.setItem("anotherAppointmentRealState", realStatus); console.log("TESTXASD", doctor); if(statusState!="rejected" && statusState != "canceled" && ((userType == "doctor" && statusState == "available") == false) ){setShowEventModal(true)} }} 
         status = {statusState}>
             <div className="col-lg-3 col-md-12 flex justify-center items-center">{time}</div>
             {userType != "doctor" ? (
@@ -317,10 +318,10 @@ export default function TimeBlock({ day, time, rowIdx, statusState, description,
             {(statusState == "anotherAppointment" && userType == "user") &&
                 <div className="col-lg-6 col-md-6 justify-end ">
                     {/* {"Doctor ID: "+receiverId} */}
-                    {""+name}
-                    <br></br>
+                    {/* {""+name} */}
+                    {/* <br></br> */}
                     {`
-                    Doctor ID: ${receiverId}
+                    Doc. ID: ${receiverId}
 
                     `}
                 </div>
@@ -329,13 +330,13 @@ export default function TimeBlock({ day, time, rowIdx, statusState, description,
                 {
                 (statusState != "available") ?
 
-                <div className="rounded-md p-2 bg-dark">
-                    <InfoIcon style={{ color: "white" }} />
+                <div className="rounded-full p-0 flex items-center bg-white">
+                    <InfoIcon className="text-blue-600" fontSize="medium" />
                 </div>
                 :
                 (
                 userType == "user" &&
-                <div className="rounded-md p-2 bg-blue-500">
+                <div className="rounded-md p-1 bg-blue-500">
                     <AddIcon style={{ color: "white" }} />
                 </div>
                 )

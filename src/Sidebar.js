@@ -9,10 +9,44 @@ import GlobalContext from "./GlobalContext";
 import BadgeIcon from '@mui/icons-material/Badge';
 import InfoIcon from '@mui/icons-material/Info';
 import { useNavigate } from "react-router-dom";
+import {fetchEvents} from "./util"
+
+import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
+import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
+import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
+import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 export default function Sidebar({time, description}){
     var navigate = useNavigate();
-    const { daySelected, dispatchCalEvent, setEventTrigger, selectedEvent, timeBloque, setTimeBloque, setShowEventModal, descriptionBloque, setDescriptionBloque, descriptionBloquePatient, userType, statusType, descriptionBloqueDoctor, setDescriptionBloqueDoctor, anotherDoctor} = useContext(GlobalContext);
+
+    const [alignment, setAlignment] = React.useState(`${time[0]+time[1]}:00`);
+
+    const handleAlignment = (event, newAlignment) => {
+      setAlignment(newAlignment);
+    };
+
+    const { 
+        daySelected, 
+        dispatchCalEvent, 
+        setEventTrigger, 
+        selectedEvent, 
+        timeBloque, 
+        setTimeBloque, 
+        setShowEventModal, 
+        descriptionBloque, 
+        setDescriptionBloque, 
+        descriptionBloquePatient, 
+        userType, 
+        statusType, 
+        descriptionBloqueDoctor, 
+        setDescriptionBloqueDoctor, 
+        anotherDoctor, 
+        selectedUser, 
+        setShowUserInfo,
+        setProcessState
+    } = useContext(GlobalContext);
     const [title, setTitle] = useState(
         selectedEvent ? selectedEvent.title : "");
 
@@ -79,15 +113,128 @@ export default function Sidebar({time, description}){
 
      const jsonData = await response.json();
     
-        setShowEventModal(false);
-     setEventTrigger(Date.now());
-     setTimeout(() => {
+    fetchEvents();
+    setEventTrigger(Date.now());
+    setShowEventModal(false);
+    setTimeout(() => {
         setEventTrigger(Date.now());
-     }, 100);
+    }, 100);
      //console.log("eventTriggerRejectAccept", eventTrigger)
     }
 
-    async function HandleEventSubmit(e){
+    
+    async function HandleEventSubmit() {
+        var obj;
+        var obj2;
+        try {
+            obj = await getAppointmentByDate(localStorage.getItem("appointmentGiver"), daySelected, time);
+            console.log("added", obj);   
+        } catch (error) {
+            console.error(error);
+        }
+
+        try {
+            obj2 = false //await CheckAppointmentLimitByDate(day, time);
+            console.log("added2", obj2);   
+        } catch (error) {
+            console.error(error);
+        }
+
+        if(!obj && obj2 == false){
+            
+        console.log("Event submit function call is successfully made.")
+        const calendarEvent = {
+            title: time,
+            description: "",
+            status: "pending",
+            day: daySelected.valueOf(),
+            id: selectedEvent ? selectedEvent.id : Date.now()
+        }
+        if (selectedEvent) {
+            dispatchCalEvent({ type: "update", payload: calendarEvent });
+        } else {
+            dispatchCalEvent({ type: "insert", payload: calendarEvent });
+        }
+
+        const datatoSend = {
+            "title": time,
+            "description": ""+description,
+            "eventType": "emergency",
+            "receiverId": localStorage.getItem("appointmentGiver"),
+            "senderId": userid, // 5
+            "status": "pending",
+            "date": daySelected.set('hours', time[0]+time[1]).set('minutes', 0).set('seconds', 0).format()
+    }
+        console.log("datatoSend", datatoSend);
+        const response =  await fetch("http://localhost:52463/api/appointment/create", {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datatoSend)
+         })
+
+        const jsonData = await response.json();
+        //setMyStatus(jsonData?.status);
+        console.log("jsondata",jsonData);
+        
+        }
+        else if(obj){
+            console.log("Event submit function call is successfully made.")
+        const calendarEvent = {
+            title: time,
+            description: "",
+            status: "pending",
+            day: daySelected.valueOf(),
+            id: selectedEvent ? selectedEvent.id : Date.now()
+        }
+        if (selectedEvent) {
+            dispatchCalEvent({ type: "update", payload: calendarEvent });
+        } else {
+            dispatchCalEvent({ type: "insert", payload: calendarEvent });
+        }
+
+        const datatoSend = {
+            "id": obj.id,
+            "title": time,
+            "description": description,
+            "eventType": "emergency",
+            "receiverId": localStorage.getItem("appointmentGiver"),
+            "senderId": userid, // 5
+            "status": "pending",
+            "date": daySelected.set('hours', time[0]+time[1]).set('minutes', 0).set('seconds', 0).format()
+    }
+        console.log("datatoSend", datatoSend);
+        const response =  await fetch("http://localhost:52463/api/appointment/update", {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datatoSend)
+         })
+
+        const jsonData = await response.json();
+        //setMyStatus(jsonData?.status);
+        console.log("jsondata",jsonData);
+        }
+        if(obj){
+            if(obj.status == "Pending"){
+                alert("Error: You can't have an appointment for the date that is already settled.")
+            }
+        }
+        if(obj2 == true){
+            alert(`Error: You can't have 2 appointment for the same day.`)
+            console.log(obj2, "TESTASD");
+        }
+        fetchEvents();
+        setEventTrigger(Date.now());
+        setTimeout(() => {
+           setEventTrigger(Date.now());
+        }, 100);
+        //console.log("eventTrigger", eventTrigger)
+    }
+
+    function HandleEventSubmit2(e){
         e.preventDefault();
         console.log("Event submit function call is successfully made.")
         const calendarEvent = {
@@ -103,10 +250,10 @@ export default function Sidebar({time, description}){
         } else {
             dispatchCalEvent({ type: "insert", payload: calendarEvent });
         }
-        var daySelectedSet = daySelected.set('hour', time[0]+time[1]).set('minute', 0).set('second', 0);
+        var daySelectedSet = daySelected.set('hour', time[0]+time[1]).set('minute', alignment[3]+alignment[4]).set('second', 0);
         console.log("DATDATE", daySelectedSet.format(), time, time[0]+ time[1])
         const datatoSend = {
-            "title": time,
+            "title": alignment, //time
             "description": ""+description,
             "eventType": "emergency",
             "receiverId": localStorage.getItem("appointmentGiver"),
@@ -114,20 +261,36 @@ export default function Sidebar({time, description}){
             "date": daySelectedSet.format()
         }
         console.log("datatoSend", datatoSend)
-        const response =  await fetch("http://localhost:52463/api/appointment/create", {
+        fetch("http://localhost:52463/api/appointment/create", {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'
             },
             body: JSON.stringify(datatoSend)
+         }).then((response)=>{
+            if(response.ok)
+                return response.json();
+            else 
+                throw new Error("User is not created because of an error");
+
+         })
+         .then(()=>{
+            setEventTrigger(Date.now());
+            fetchEvents();
+            setShowEventModal(false);
+            setEventTrigger(Date.now());
+            setTimeout(() => {
+               setEventTrigger(Date.now());
+            }, 100);
+            setProcessState(1);
+            setTimeout(() => {
+                setProcessState(0);
+            }, 1000);
+        })
+         .catch((e)=>{
+            alert(e);
          })
 
-         const jsonData = await response.json();
-         setShowEventModal(false);
-         setEventTrigger(Date.now());
-         setTimeout(() => {
-            setEventTrigger(Date.now());
-         }, 100);
     }
 
     return (
@@ -139,23 +302,25 @@ export default function Sidebar({time, description}){
                 {statusType == "anotherAppointment" &&
                 <div className="flex flex-column items-center">
                     <p className="bg-red-300 p-2">This appointment request is from another doctor.</p>
-                    <p className="mt-2">Request Situation is: XXXXXX</p>
+                    <p className="mt-2">Request Situation is: {localStorage.getItem("anotherAppointmentRealState")}</p>
                     <div className="px-5 mt-1">
-                        <Button variant="contained" onClick={()=>{localStorage.setItem("appointmentGiver", 15); navigate("/login")}}>Go To that Doctor</Button>
+                        <Button variant="contained" onClick={()=>{localStorage.setItem("appointmentGiver", selectedUser.userId); navigate("/login")}}>Go To that Doctor</Button>
                     </div>
                     <div className="px-5 mt-1">
                         <Button variant="contained" color="error">Cancel Appointment</Button>
                     </div>
                     <div className="flex items-center">
-                        <p>Your Doctor is: Ömer Aktan</p>
-                        <Button>
+                        {console.log("TESTXXASD", selectedUser)}
+                        <p>Your Doctor is: {selectedUser && selectedUser.name}</p>
+                        <Button onClick={()=>{setShowUserInfo(2);}}>
                             <InfoIcon />
                         </Button>
                     </div>
                 </div>
                 }
             </div>
-            {/* <TextField
+            {/* 
+            <TextField
               id="filled-number"
               label="Receiver ID"
               type="number"
@@ -164,12 +329,39 @@ export default function Sidebar({time, description}){
                 shrink: true,
               }}
               variant="filled"
-            /> */}
+            /> 
+            */}
             
 
             {/* <TextField id="title" className="mt-2 w-100" label="Title" name="title" variant="filled" onChange={ (event)=>{setTitle(event.target.value);} } /> */}
             
             <div className="mt-1 flex flex-column justify-stretch w-100">
+                {(statusType === "available" && userType == "user") &&
+                <>
+                <h4 className="text-center">Choose a time for {time}</h4>
+                <ToggleButtonGroup
+                className="flex justify-center mt-1 mb-4"
+                  value={alignment}
+                  exclusive
+                  onChange={handleAlignment}
+                  aria-label="text alignment"
+                >
+                    <ToggleButton value={`${time[0]+time[1]}:00`} aria-label={`${time[0]+time[1]}:00`}>
+                        {time[0]+time[1]}:00
+                    </ToggleButton>
+                    <ToggleButton value={`${time[0]+time[1]}:15`} aria-label={`${time[0]+time[1]}:15`}>
+                        {time[0]+time[1]}:15
+                    </ToggleButton>
+                    <ToggleButton value={`${time[0]+time[1]}:30`} aria-label={`${time[0]+time[1]}:30`}>
+                        {time[0]+time[1]}:30
+                    </ToggleButton>
+                    <ToggleButton value={`${time[0]+time[1]}:45`} aria-label={`${time[0]+time[1]}:45`}>
+                        {time[0]+time[1]}:45
+                    </ToggleButton>
+
+                </ToggleButtonGroup>
+                </>
+                }
                 {/* <label for="textarea">Text</label> */}
                 {
                     (statusType === "available" && userType == "user") &&

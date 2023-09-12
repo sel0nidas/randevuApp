@@ -66,7 +66,7 @@ function App() {
 //       });
 // }, []);
 
-   async function HandleSubmit (e) {
+   async function HandleSubmit2 (e) {
       e.preventDefault();
       console.log("submit is triggered...")
       const url = "http://localhost:52463/api/user/register"
@@ -114,6 +114,36 @@ function App() {
            }
          //navigate("/login");
          
+
+     } catch (error) {
+      console.error(error);
+     }
+   }
+
+   async function HandleSubmit (e) {
+      e.preventDefault();
+      console.log("submit is triggered...")
+      const url = `http://localhost:52463/api/user/register${userType == "doctor" ? "fordoctor" : ""}`
+     try {
+         const datatoSend = {
+            "name": document.getElementById("username").value,
+            "password": document.getElementById("password").value,
+            "UserType": userType,
+            "doctorType": doctorType,
+            "gender": gender
+         }
+         const response =  await fetch(url, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datatoSend)
+         })
+
+         const jsonData = await response.json();
+         console.log(jsonData);
+         console.log(UserName);
+         navigate("/login");
 
      } catch (error) {
       console.error(error);

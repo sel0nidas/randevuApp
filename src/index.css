@@ -43,4 +43,13 @@ code {
 .h-90dvh{
   height: 90dvh;
 }
+.bg-image{
+  background-image: url('../public/img/bg.jpg');
+  background-size: cover;
+}
+
+.matrix-image{
+  background-image: url('https://media.tenor.com/IvyuPtEfzhoAAAAM/matrix.gif');
+  background-size: cover;
+}
 

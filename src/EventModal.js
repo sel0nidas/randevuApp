@@ -6,11 +6,14 @@ import { Button } from '@mui/material';
 import EventsBar from './EventsBar';
 import Sidebar from './Sidebar';
 import BadgeIcon from '@mui/icons-material/Badge';
+import UserInfo from './UserInfo';
+import CancelDay from './cancelDay';
+import Notifications from './Notifications';
 
 export default function EventModal() {
 
-    const [title, setTitle] = useState('');
-    const { showEventModal, setShowEventModal, timeBloque, setTimeBloque, descriptionBloque, setDescriptionBloque } = useContext(GlobalContext);
+    const [width, setWidth] = useState('w-3/10');
+    const { showEventModal, setShowEventModal, timeBloque, setTimeBloque, descriptionBloque, setDescriptionBloque, showUserInfo, setShowUserInfo} = useContext(GlobalContext);
     
     function handleSubmit(e) {
         e.preventDefault();
@@ -31,24 +34,46 @@ export default function EventModal() {
             */
         }}
         >
-            <form id="eventModalMainForm" className='bg-white rounded-lg shadow-2xl w-1/4 z-20  pb-7' >
+            <form id="eventModalMainForm" className={`bg-white rounded-lg shadow-2xl ${width} z-20 pb-7`} >
                 <header className='px-4 py-2 flex justify-between items-center mt-1'>
-                    <div>
-                        <h1 className='text-xl font-bold'>Appointment Details</h1>
+                    <div className='col-md-9'>
+                        <h1 className='text-xl font-bold'>
+                        {showUserInfo == 1 &&
+                        "Appointment Operations"
+                        }
+                        {showUserInfo == 2 &&
+                        "User Info"}
+
+                        {showUserInfo == 3 &&
+                        "Cancel Day"}
+                        </h1>
                     </div>
-                    <button onClick={()=>{setShowEventModal(false)}}>
-                        <span className='material-icons-outlined text-gray-400'>
-                            <CloseIcon />
-                        </span>
-                    </button>
+                        <button className="px-5 flex justify-end items-center hover:bg-black hover:text-white z-50" onClick={()=>{setShowEventModal(false); setShowUserInfo(1);}}>
+                            <span className='material-icons-outlined text-gray-400'>
+                                <CloseIcon />
+                            </span>
+                        </button>
                 </header>
                 <div className='p-3'>
                         {console.log("descriptionBloque", descriptionBloque)}
+                        
+                        {showUserInfo == 1 &&
                         <Sidebar time={timeBloque} description={descriptionBloque}/>
-                    {/* <div className='grid grid-cols-1/5 items-end gap-y-7'>
-                        <div></div>
-                        <input type="text" />
-                    </div> */}
+                        }
+                        {showUserInfo == 2 &&
+                        <UserInfo />}
+
+                        {showUserInfo == 3 &&
+                        <CancelDay time={timeBloque} />}
+                        
+                        {showUserInfo == 4 &&
+                        <Notifications setWidth={setWidth} senderId={localStorage.getItem('formData') ? JSON.parse(localStorage.getItem('formData')).id : null}/>}
+                        
+                        {/* 
+                        <div className='grid grid-cols-1/5 items-end gap-y-7'>
+                            <div></div>
+                            <input type="text" />
+                        </div> */}
                 </div>
                 
 
