@@ -10,6 +10,7 @@ import Calendar from './Calendar';
 import reportWebVitals from './reportWebVitals';
 import ContextWrapper from './ContextWrapper';
 import Choose from './CalendarChoose'
+import Info from './Info'
 import Settings from './Settings'
 import PageNotFound from './PageNotFound';
 //<App />
@@ -22,6 +23,7 @@ root.render(
       <Route exact path='/' element={<Login />} />
       <Route exact path='/login' element={<Login />} />
       <Route exact path='/register' element={<Register />} />
+      <Route exact path='/info' element={<Info />} />
       <Route exact path='/choose' element={
 		    <Choose />
         } />

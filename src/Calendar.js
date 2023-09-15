@@ -18,6 +18,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 const StaticDatePicker = () => {
   	const navigate = useNavigate();
 	
+
+	const [fetchState, setFetchState] = useState();
+
 	const [currentMonth, setCurrentMonth] = useState(getMonth())
 	const { 
 		monthIndex, 
@@ -41,6 +44,30 @@ const StaticDatePicker = () => {
 	// 	}, 100);
 		
 	// }, [])
+
+	useEffect(() => {
+		// callback function to call when event triggers
+		const onPageLoad = () => {
+		  console.log('page loaded');
+		  setFetchState(fetchEvents());
+		  setTimeout(() => {
+			setEventTrigger(Date.now())
+		  }, 200);
+		};
+		
+		// Check if the page has already loaded
+		if (document.readyState === 'complete') {
+		  onPageLoad();
+		} else {
+		  window.addEventListener('load', onPageLoad, false);
+		  // Remove the event listener when component unmounts
+		  return () => window.removeEventListener('load', onPageLoad);
+		}
+	  }, []);
+
+	useEffect(()=>{
+		setEventTrigger(Date.now());
+	}, [fetchState])
 
 	useEffect(()=>{
 		//console.log("flaired", dayjs().duration())

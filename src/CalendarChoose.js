@@ -16,10 +16,13 @@ export default function CalendarChoose() {
             navigate("/calendar")
         }
 
-        fetch(`http://localhost:52463/api/user`, {
+        fetch(`http://localhost:52463/api/doctor`, {
             method: 'GET'
-        }).then(x=>x.json()).then(y=>{
-            setUserList(y.filter(u=>u.userType !== "user"));
+        }).then(x=>x.json()).then(y=>{ 
+            y.sort((a, b) => a.userId - b.userId);
+
+            // Set the sorted data to userList
+            setUserList(y);
         })
     }, [])
 
@@ -45,8 +48,8 @@ export default function CalendarChoose() {
                         <div className="col-md-2">Gender</div>
                     </div>
                     {userList.map((evt)=>(
-                        <div className="col-md-12 row flex justify-center items-stretch py-3 cursor-pointer border-2 bg-gray-300 itemOnListofUsers" key={evt.id} onClick={()=>{localStorage.setItem("appointmentGiver", evt.id); fetchEvents(); navigate(`/calendar`)}}>
-                            <div className="col-md-2 h-full">{evt.id}</div>
+                        <div className="col-md-12 row flex justify-center items-stretch py-3 cursor-pointer border-2 bg-gray-300 itemOnListofUsers" key={evt.id} onClick={()=>{localStorage.setItem("appointmentGiver", evt.userId); localStorage.setItem("appointmentGiverObject", JSON.stringify(evt)); fetchEvents(); navigate(`/calendar`)}}>
+                            <div className="col-md-2 h-full">{evt.userId}</div>
                             <div className="col-md-5 h-full">{evt.name}</div>
                             <div className="col-md-3 h-full">{evt.doctorType}</div>
                             <div className="col-md-2 h-full flex justify-center">

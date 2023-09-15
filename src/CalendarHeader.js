@@ -13,6 +13,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DialogueBox from './DialogueBox';
 import { fetchEvents } from "./util";
+import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 
 export default function CalendarHeader(){
 
@@ -58,6 +59,17 @@ export default function CalendarHeader(){
             setEventTrigger(Date.now())
         }, 100);
 
+        fetch(`http://localhost:52463/api/user/${localStorage.getItem("appointmentGiver")}`, {
+            method: 'GET'
+        }).then(x=>x.json()).then(y=>{ 
+            y.userId = y.id;
+            localStorage.setItem("appointmentGiverObject", JSON.stringify(y));
+        })
+        // setTimeout(() => {
+        //     fetchEvents();
+        //     setEventTrigger(Date.now())
+        // }, 300);
+
         // setInterval(() => {
         //     setEventTrigger(Date.now());
         //     fetchEvents();
@@ -88,7 +100,7 @@ export default function CalendarHeader(){
 	}
 
 	function handleNextMonth(){
-        //if(date.getMonth()+1 != monthIndex)
+        if(date.getMonth()+3 != monthIndex)
 		    setMonthIndex(monthIndex + 1);
 	}
 
@@ -110,8 +122,37 @@ export default function CalendarHeader(){
 
     return (
         <header className="px-4 py-2 flex items-center justify-between">
-            <div className="flex flex-1 items-center justify-center">
-                <h1 className="mr-10 text-base text-gray-500 font-bold pl-2 underline decoration-blue-700 decoration-2">Appointment Giver ID: {localStorage.getItem('appointmentGiver')}</h1>
+            <div className="flex flex-1 items-center justify-between px-4">
+                {
+                    localStorage.getItem("appointmentGiverObject") &&
+                    <div className="flex">
+                        <div className="bg-gray-400 w-8 h-8 rounded-full hidden">
+                            <img src="https://m.media-amazon.com/images/M/MV5BNzFkNDM4NzEtZmRjZS00ODA2LTk2ZTctZmI5MmQxMDEwM2JiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg" className="w-100 h-100 rounded-full" ></img>
+                        </div>
+                        <div className="flex items-center px-3 pr-5  bg-indigo-400 hidden">
+                            <div className="w-12 h-12 p-2 flex hidden">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7DQCKIosrxrE_9mZ0FM99yX8_6Zs_jfDJZOCzhlxU_w&s" className="w-100 h-100 rounded-full"></img>
+                            </div>
+                            <h3 className="font-semibold px-1 text-white">APPointer</h3>
+                        </div>
+                        <h1 className="flex font-bold border-2 border-black p-2 text-base text-black">
+                            Dr.
+                            <p className="px-2">
+                            {/* Orkun Toksaçak */}
+                            {JSON.parse(localStorage.getItem("appointmentGiverObject")).name}
+                            </p>
+                        </h1>
+                        
+                        <h1 className="flex font-bold bg-yellow-400 border-2 border-black p-2 text-base text-black">
+                            ID: 
+                            <p className="px-2">
+                            {/* Orkun Toksaçak */}
+                            {JSON.parse(localStorage.getItem("appointmentGiverObject")).userId}
+                            </p>
+                        </h1>
+                    </div>
+                }
+                <h1 className="mr-10 text-base text-gray-500 font-bold pl-2 underline decoration-blue-700 decoration-2 hidden">Appointment Giver ID: {localStorage.getItem('appointmentGiver')}</h1>
                 {/* <Button onClick={refreshCalendar}>
                     <span className="material-icons-outlined cursor-pointer text-gray-600 mx-2">
                         <RefreshIcon />
@@ -126,6 +167,7 @@ export default function CalendarHeader(){
                 }
                 {/* <DialogueBox /> */}
                 {/* <Button className="border rounded py-2 px-4 mr-5" onClick={resetCalendar}>Today</Button> */}
+                <div>
                 <Button onClick={handlePrevMonth}>
                     <span className="material-icons-outlined cursor-pointer text-gray-600 mx-2">
                         <ChevronLeftIcon />
@@ -136,6 +178,7 @@ export default function CalendarHeader(){
                         <ChevronRightIcon />
                     </span>
                 </Button>
+                </div>
                 <div style={{width: '220px'}} className="">
                     <h2 className="ml-4 text-base sm:text-xs md:text-xs lg:text-base 2xl:text-lg text-gray-500 font-bold">
                         {dayjs(new Date(dayjs().year(), monthIndex)).format(
@@ -180,7 +223,7 @@ export default function CalendarHeader(){
                 </div>
             </div>
             <div className="flex-1 flex justify-end">
-                <div className="flex items-center justify-center text-base underline decoration-purple-700 decoration-2 font-semibold">
+                <div className="flex items-center justify-center text-base font-semibold">
                     Type of User: {userType2 === "doctor" ? "doctor" : "user"}
                 </div>
                 {/* {userType2 == "user" &&
@@ -188,12 +231,15 @@ export default function CalendarHeader(){
                     | Show The Appointments |
                 </Button> 
                 } */}
-                {userType2 == "doctor" && 
+                {(userType2 == "doctor" && false) && 
                 //<></>
                 <Button style={{marginRight: '0px'}} color="inherit" onClick={()=>{navigate("/settings")}}>
                    <SettingsIcon />
                 </Button>
                 } 
+                <Button onClick={()=>{navigate("/info")}}>
+                    <HelpCenterIcon />
+                </Button>
                 {
                 userType2 != "doctor" &&
                 <Button style={{marginRight: '0px'}} className="relative" color="inherit" onClick={()=>{setShowEventModal(true); setShowUserInfo(4);}}>

@@ -75,7 +75,7 @@ timestowork.forEach(time=>{
 	  setDayEvents([...events, ...events2]);
 	  //console.log(status, "dayEvents",dayEvents)
 
-  }, [savedEvents, day, eventTrigger]);
+  }, [day, eventTrigger]); //savedEvents, 
   
   function isDayAvailableForDoctor(dayOfWeekString){
       return daystowork.includes(dayOfWeekString);
@@ -92,7 +92,7 @@ timestowork.forEach(time=>{
   }
   
   function isDateInRange(){
-    return (day.isBefore(dayjs()) === false && day.isBefore(dayjs().add(150, 'day')) === true) || day.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
+    return (day.isBefore(dayjs()) === false && day.isBefore(dayjs().add(90, 'day')) === true) || day.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
   }
   
   function isDateInRangeClass() {
@@ -161,10 +161,10 @@ timestowork.forEach(time=>{
               &&
               isDayAvailableForDoctor(day.format('ddd').toUpperCase())
             )
-            // &&
-            // day.format("dddd") != "Saturday"
-            // &&
-            // day.format("dddd") != "Sunday"
+            &&
+            day.format("dddd") != "Saturday"
+            &&
+            day.format("dddd") != "Sunday"
             
           )
           &&

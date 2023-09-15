@@ -54,6 +54,7 @@ export default function Sidebar({time, description}){
 
     var date2 = daySelected.set('hours', time[0]+time[1]).set('minutes', 0).set('seconds', 0).format().slice(0, -6)//time[0]+time[1])
     useEffect(()=>{
+        setDescriptionBloque("");
         console.log("zortirizort2", date2, selectedEvent, time, description)
     },[])
 
@@ -110,8 +111,6 @@ export default function Sidebar({time, description}){
         },
         body: JSON.stringify(datatoSend)
      })
-
-     const jsonData = await response.json();
     
     fetchEvents();
     setEventTrigger(Date.now());
@@ -304,12 +303,12 @@ export default function Sidebar({time, description}){
                     <p className="bg-red-300 p-2">This appointment request is from another doctor.</p>
                     <p className="mt-2">Request Situation is: {localStorage.getItem("anotherAppointmentRealState")}</p>
                     <div className="px-5 mt-1">
-                        <Button variant="contained" onClick={()=>{localStorage.setItem("appointmentGiver", selectedUser.userId); navigate("/login")}}>Go To that Doctor</Button>
+                        <Button variant="contained" onClick={()=>{localStorage.setItem("appointmentGiver", selectedUser.userId); localStorage.setItem("appointmentGiverObject", JSON.stringify(selectedUser)); navigate("/login")}}>Go To that Doctor</Button>
                     </div>
-                    <div className="px-5 mt-1">
-                        <Button variant="contained" color="error">Cancel Appointment</Button>
+                    <div className="px-5 mt-1 hidden">
+                        <Button onClick={()=>{RejectOrAccept("reject");}} variant="contained" color="error">Cancel Appointment</Button>
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex items-center hidden">
                         {console.log("TESTXXASD", selectedUser)}
                         <p>Your Doctor is: {selectedUser && selectedUser.name}</p>
                         <Button onClick={()=>{setShowUserInfo(2);}}>
@@ -336,15 +335,15 @@ export default function Sidebar({time, description}){
             {/* <TextField id="title" className="mt-2 w-100" label="Title" name="title" variant="filled" onChange={ (event)=>{setTitle(event.target.value);} } /> */}
             
             <div className="mt-1 flex flex-column justify-stretch w-100">
-                {(statusType === "available" && userType == "user") &&
-                <>
-                <h4 className="text-center">Choose a time for {time}</h4>
+                {/* {(statusType === "available" && userType == "user") &&
+                <div className="hidden">
+                <h4 className="text-center hidden">Choose a time for {time}</h4>
                 <ToggleButtonGroup
-                className="flex justify-center mt-1 mb-4"
-                  value={alignment}
-                  exclusive
-                  onChange={handleAlignment}
-                  aria-label="text alignment"
+                    className="flex justify-center mt-1 mb-4 hidden"
+                    value={alignment}
+                    exclusive
+                    onChange={handleAlignment}
+                    aria-label="text alignment"
                 >
                     <ToggleButton value={`${time[0]+time[1]}:00`} aria-label={`${time[0]+time[1]}:00`}>
                         {time[0]+time[1]}:00
@@ -360,8 +359,8 @@ export default function Sidebar({time, description}){
                     </ToggleButton>
 
                 </ToggleButtonGroup>
-                </>
-                }
+                </div>
+                } */}
                 {/* <label for="textarea">Text</label> */}
                 {
                     (statusType === "available" && userType == "user") &&

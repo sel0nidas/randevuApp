@@ -316,20 +316,19 @@ export default function TimeBlock({ day, time, rowIdx, statusState, description,
             )
             }
             {(statusState == "anotherAppointment" && userType == "user") &&
-                <div className="col-lg-6 col-md-6 justify-end ">
+                <div className="col-lg-6 col-md-6 justify-end hidden">
                     {/* {"Doctor ID: "+receiverId} */}
                     {/* {""+name} */}
                     {/* <br></br> */}
-                    {`
+                    {/* {`
                     Doc. ID: ${receiverId}
 
-                    `}
+                    `} */}
                 </div>
             }
             <div className="col-lg-3 col-md-3 flex items-center justify-center">
                 {
                 (statusState != "available") ?
-
                 <div className="rounded-full p-0 flex items-center bg-white">
                     <InfoIcon className="text-blue-600" fontSize="medium" />
                 </div>

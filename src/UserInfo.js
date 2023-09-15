@@ -27,7 +27,7 @@ export default function UserInfo() {
                     <p>{selectedUser.doctorType}</p>
                 </li>
                 <hr></hr>
-                <li className="flex items-center mt-1 py-1">
+                {/* <li className="flex items-center mt-1 py-1">
                     <h1 className="font-bold text-md px-3">Work Days: </h1>
                     <div className="flex">
                         {
@@ -37,9 +37,9 @@ export default function UserInfo() {
                         }
                     </div>
                     
-                </li>
+                </li> */}
                 <hr></hr>
-                <li className="flex items-center mt-1 py-1">
+                {/* <li className="flex items-center mt-1 py-1">
                     <h1 className="font-bold text-md px-3">Work Times: </h1>
                     <div className="flex">
                         {   
@@ -48,7 +48,7 @@ export default function UserInfo() {
                             ))
                         }
                     </div>
-                </li>
+                </li> */}
             </ul>
             }
         </div>

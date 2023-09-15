@@ -48,7 +48,7 @@ export default function EventModal() {
                         "Cancel Day"}
                         </h1>
                     </div>
-                        <button className="px-5 flex justify-end items-center hover:bg-black hover:text-white z-50" onClick={()=>{setShowEventModal(false); setShowUserInfo(1);}}>
+                        <button className="p-2 flex justify-end items-center hover:bg-black hover:text-white z-50" onClick={()=>{setShowEventModal(false); setShowUserInfo(1);}}>
                             <span className='material-icons-outlined text-gray-400'>
                                 <CloseIcon />
                             </span>

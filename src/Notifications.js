@@ -70,8 +70,9 @@ export default function Notifications({setWidth, senderId}) {
                                 is 
                                 <p className={`${handleStatusInNotifications(item.status)} border-2 border-black mx-2 px-1 w-20 flex justify-center`}>{item.status}</p>
                             </p>
-                            <p>
-                                İşlemin yapıldığı tarih: {""+JSON.stringify(item)} x
+                            <p className="hidden">
+                                İşlemin yapıldığı tarih: x
+                                {/* {""+JSON.stringify(item)} */}
                             </p> 
                         </div>
                     ))}

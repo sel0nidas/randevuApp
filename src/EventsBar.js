@@ -219,7 +219,7 @@ let array = [
 
   
   function isDateOutOfRange(){
-    return (daySelected.isBefore(dayjs()) === false && daySelected.isBefore(dayjs().add(150, 'day')) === true) || daySelected.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
+    return (daySelected.isBefore(dayjs()) === false && daySelected.isBefore(dayjs().add(90, 'day')) === true) || daySelected.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
   }
 
   // events.sort((a, b) => {
@@ -344,6 +344,10 @@ let array = [
       {
         (
           isDateOutOfRange()
+          &&
+          daySelected.format("dddd") != "Saturday"
+          &&
+          daySelected.format("dddd") != "Sunday"
         )
         
         ?

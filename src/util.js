@@ -20,11 +20,13 @@ export function getMonth(month = dayjs().month()){
 }
 
 export function fetchEvents(){
-
+    // localStorage.setItem("savedEvents", JSON.stringify([]));
+    // localStorage.setItem("savedEvents2", JSON.stringify([]));
     var array = [];
     var arrayPersonal = [];
     var daystowork = [];
     var senderId = 0;
+
     if(localStorage.getItem('formData')){
         senderId = JSON.parse(localStorage.getItem('formData')).id;
     }
@@ -149,7 +151,9 @@ export function fetchEvents(){
         //         localStorage.setItem('daystowork', y.workdays);
         //     })
     }
-
+    else{
+        localStorage.setItem("savedEvents2", JSON.stringify([]));
+    }
     // fetch(`http://localhost:52463/api/appointment/getcalendar/${receiverId}`, {
     //     method: 'GET',
     //     headers: {

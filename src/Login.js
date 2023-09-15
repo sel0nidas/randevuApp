@@ -107,6 +107,7 @@ function App() {
          
          if(jsonData.userType === "doctor"){
             localStorage.setItem('appointmentGiver', jsonData.id);
+            localStorage.setItem('appointmentGiverObject', JSON.stringify({userId: jsonData.id, name: jsonData.name}));
          }
 
          // setUserId(jsonData.id);
