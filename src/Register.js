@@ -213,7 +213,7 @@ function App() {
                </FormControl>
 
                <FormControl className='mt-3 w-100'>
-               <InputLabel id="demo-simple-select-label">Doctor Type</InputLabel>
+               <InputLabel id="demo-simple-select-label">User Type</InputLabel>
                <Select
                  labelId="demo-simple-select-label"
                  id="demo-simple-select"
@@ -228,7 +228,7 @@ function App() {
 
                {userType == "doctor" &&
                <FormControl className='mt-3 w-100'>
-               <InputLabel id="demo-simple-select-label">User Type</InputLabel>
+               <InputLabel id="demo-simple-select-label">Doctor Type</InputLabel>
                <Select
                  labelId="demo-simple-select-label"
                  id="demo-simple-select"
